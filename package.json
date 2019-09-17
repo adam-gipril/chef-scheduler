@@ -1,0 +1,26 @@
+{
+  "name": "chef-cal-integration",
+  "version": "1.0.0",
+  "description": "Google Calendar Integration for chef scheduler",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "start": "node --experimental-modules index.js",
+    "test": "jest"
+  },
+  "author": "Adam Gipril <adam.gipril@icloud.com>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "eslint": "^6.4.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.17.0",
+    "jest": "^24.9.0"
+  }
+}
