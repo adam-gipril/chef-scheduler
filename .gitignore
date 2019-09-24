@@ -1,1 +1,4 @@
 node_modules
+dist
+credentials.json
+Chef Scheduler-e08f2a73eef8.json
