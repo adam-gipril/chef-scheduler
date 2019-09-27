@@ -23,23 +23,21 @@ function capitalize([char, ...string]: string): string {
 const { events: calendar } = google.calendar('v3');
 const calendarId = 'primary';
 
-export default {
-  createEvents(start: string, schedule: ScheduleData[]): Promise<Event[]> {
-    return Promise.resolve(schedule.map(({ type, chef, day }) => {
-      const summary = `${capitalize(type)} — ${capitalize(chef)}`;
-      const date = new Date(start);
-      date.setDate(date.getDate() + days[day.toUpperCase()]);
-      return new Event(summary, date);
-    }));
-  },
+export function createEvents(start: string, schedule: ScheduleData[]): Promise<Event[]> {
+  return Promise.resolve(schedule.map(({ type, chef, day }) => {
+    const summary = `${capitalize(type)} — ${capitalize(chef)}`;
+    const date = new Date(start);
+    date.setDate(date.getDate() + days[day.toUpperCase()]);
+    return new Event(summary, date);
+  }));
+}
 
-  async submitEvents(events: Event[]): Promise<object> {
-    const auth = await client;
-    const requests = events.map((event) => calendar.insert({
-      auth,
-      calendarId,
-      requestBody: event,
-    }));
-    return Promise.all(requests);
-  },
-};
+export async function submitEvents(events: Event[]): Promise<object> {
+  const auth = await client;
+  const requests = events.map((event) => calendar.insert({
+    auth,
+    calendarId,
+    requestBody: event,
+  }));
+  return Promise.all(requests);
+}
