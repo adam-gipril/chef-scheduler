@@ -7,19 +7,23 @@
 
 Zana very kindly developed a Python application called
 [Chef Scheduler](https://github.com/zjipsen/chef-scheduler) for scheduling each of us to cook on
-days we're available, and with a degree of intelligence in favoring chefs that haven't cooked in a
-while. The Python application sends out schedule updates once weekly via text message.
+days we're available, and with an extra degree of intelligence in favoring chefs who haven't cooked
+in a while. The Python application sends out schedule updates once weekly via text message.
 
 Because text conversations can be easily buried and difficult to resurface, it would be convenient
-to also glance at the schedule in a Calendar view. This Node/Express application accepts POST
-requests from the scheduler, and converts the schedule into Google Calendar events.
+to also glance at the schedule in a Calendar view. Additionally, calendar integration means the
+built-in notification support already in place on most calendars can be leveraged for more easily-
+and personally-configured push notifications when it's your time to cook.
+
+This Node/Express application accepts POST requests from the scheduler, and converts the schedule
+into Google Calendar events.
 
 ## Table of Contents
 
 1. [Developing](#developing)
 1. [Documentation](#documentation)
-1. [Contributing](#contributing)
 1. [Deploying](#deploying)
+1. [Contributing](#contributing)
 1. [Links](#links)
 
 ## Developing
@@ -27,19 +31,15 @@ requests from the scheduler, and converts the schedule into Google Calendar even
 ### Prerequisites
 
 * [Node.js](https://nodejs.org/en/download/) (12.4.x)
+* [NVM](https://github.com/nvm-sh/nvm/blob/master/README.md)
 * [NPM](https://www.npmjs.com)
-
-  #### Optional
-
-  * [Nodemon](https://nodemon.io/) (1.19.x)
-  * [NVM](https://github.com/nvm-sh/nvm/blob/master/README.md)
 
 ### Cloning the project and installing dependencies
 
 ```bash
 git clone https://github.com/bikeshaman/chef-cal-integration.git
 cd chef-cal-integration
-nvm install # if you don't have nvm, make sure Node.js v12.4.x is installed (node --version)
+nvm install
 npm install
 ```
 
@@ -56,9 +56,13 @@ npm run build:watch # compiles the project and watches for changes
 ### Authentication
 
 This application is configured to work with Google service accounts having the
-[Google Calendar API](https://developers.google.com/calendar) enabled. Requests to the API are
-authenticated using OAuth 2.0, with credentials loaded from a file named `credentials.json` in the
-root directory.
+[Google Calendar API](https://developers.google.com/calendar) enabled.
+
+Requests to the API are authenticated using OAuth 2.0, with credentials loaded from the
+`CREDENTIALS` environment variable. The environment variable needs to be set on your machine or the
+deployment instance, and its value should be the stringified `credentials.json` object obtained
+through the [Google Cloud Platform console](https://console.cloud.google.com/) for your service
+account.
 
 For more information on OAuth 2.0, Google service accounts, and obtaining the requisite credentials
 to make successful requests, see
@@ -66,12 +70,8 @@ to make successful requests, see
 
 ### Running the server
 
-The server can be started using one of the following commands. Note that the `start:watch` script
-does not set the requisite environment variable to authenticate with Google, and as such doesn't
-make successful calls to the Google Calendar API.
-
-The default port is 4003, and can be overridden by preceding either command with
-`PORT=<desired port>`.
+The server can be started using one of the following commands. Port 4003 is default, and can be
+overridden by preceding either command with `PORT=<desired port>`.
 
 ```bash
 npm start           # runs the server
@@ -82,6 +82,7 @@ npm run start:watch # runs the server using nodemon to watch for changes
 
 Each method, class, and interface definition is documented using [JSDoc](https://devdocs.io/jsdoc/)
 syntax. Many IDEs are capable of generating hover-over documentation on-the-fly from JSDoc syntax.
+
 To compile a navigable documentation resource and open it in your default browser, be sure to first
 [compile the project](#compiling) then run:
 
@@ -89,15 +90,20 @@ To compile a navigable documentation resource and open it in your default browse
 npm run docs
 ```
 
-## Contributing
-
-I'm the only contributor right now, and I'll plan to fill out this section after the deploy process
-is decided upon.
-
 ## Deploying
 
-This project is not yet deployed, and this section will be updated as soon as the deploy process is
-decided upon.
+This application is deployed on [Heroku](https://www.heroku.com/). A webhook is in place to
+automatically update the deployment any time a change is committed to `master` on the GitHub repo.
+Google credentials are set with a config var through the Heroku dashboard or CLI.
+
+I'm currently the only individual with access to the deployment, so please get in touch with any
+questions or requests regarding the deploy.
+
+## Contributing
+
+With the webhook in place to automatically deploy any committed changes to `master`, please
+contribute via a feature branch and pull request. That being said, it's pretty low stakes if
+something fails on this service, so no big deal.
 
 ## Links
 

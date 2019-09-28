@@ -1,11 +1,12 @@
 import { google } from 'googleapis';
 
 /**
- * Obtains OAuth2 credentials from the file at the path specified by environment variable
- * `GOOGLE_APPLICATION_CREDENTIALS`, and scopes authentication to Google Calendar API requests.
+ * Obtains OAuth2 credentials from the `CREDENTIALS` environment variable, and scopes authentication
+ * to just Google Calendar API requests.
  *
  * @type {Promise<Compute | JWT | UserRefreshClient>}
  */
 export default google.auth.getClient({
+  credentials: JSON.parse(process.env.CREDENTIALS),
   scopes: ['https://www.googleapis.com/auth/calendar'],
 });
