@@ -9,11 +9,12 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "docs": "rm -rf docs && jsdoc -c ./jsdoc.json -d ./docs -r",
+    "docs": "rm -rf docs && jsdoc -c ./jsdoc.json -d ./docs -r && open docs/index.html",
     "lint": "eslint src --ext ts",
     "build": "tsc -p tsconfig.json",
     "build:watch": "tsc -w",
     "start": "GOOGLE_APPLICATION_CREDENTIALS=\"credentials.json\" node dist/index.js",
+    "start:watch": "nodemon dist/index.js",
     "test": "jest"
   },
   "author": "Adam Gipril <adam.gipril@icloud.com>",
