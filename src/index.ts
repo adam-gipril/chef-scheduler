@@ -4,7 +4,7 @@ import { createEvents, submitEvents } from './google/calendar';
 const app = express();
 const server = app.listen(process.env.PORT || '4003');
 
-app.use(express.json());
+app.use(express.json()); // parsing of JSON request bodies
 app.post('/schedule', ({ body }, res) => {
   try {
     const { 'start-date': start, schedule } = body;

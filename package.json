@@ -9,8 +9,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "docs": "rm -rf docs && jsdoc -c ./jsdoc.json -d ./docs -r",
     "lint": "eslint src --ext ts",
-    "build": "tsc -p",
+    "build": "tsc -p tsconfig.json",
     "build:watch": "tsc -w",
     "start": "GOOGLE_APPLICATION_CREDENTIALS=\"credentials.json\" node dist/index.js",
     "test": "jest"
@@ -31,6 +32,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^22.17.0",
     "jest": "^24.9.0",
+    "jsdoc": "^3.6.3",
     "ts-jest": "^24.1.0",
     "typescript": "^3.6.3"
   },
