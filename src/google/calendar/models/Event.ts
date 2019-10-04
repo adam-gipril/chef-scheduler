@@ -9,11 +9,8 @@ import EventDateTime from './EventDateTime';
  */
 export default class Event implements calendarV3.Schema$Event {
   summary: string;
-
   description?: string;
-
   start: EventDateTime;
-
   end: EventDateTime;
 
   constructor(
