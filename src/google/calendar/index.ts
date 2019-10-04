@@ -13,13 +13,7 @@ interface ScheduleData {
   day: string,
 }
 
-enum days {
-  SUN = 0,
-  MON = 1,
-  TUE = 2,
-  WED = 3,
-  THU = 4,
-}
+enum days { SUN, MON, TUE, WED, THU }
 
 /**
  * Capitalize the first character of a string, and convert all other characters to lower case.
@@ -30,9 +24,6 @@ function capitalize([char, ...string]: string): string {
   return `${char.toUpperCase()}${string.join('').toLowerCase()}`;
 }
 
-const { events: calendar } = google.calendar('v3');
-const calendarId = 'primary';
-
 /**
  * Converts a schedule representation of chef assignments into an array of events formatted for
  * insertion into a Google Calendar.
@@ -42,13 +33,13 @@ const calendarId = 'primary';
  * @param {ScheduleData[]} schedule An array of schedule entries
  * @returns {Promise<Event[]>} Promise resolving to an array of events
  */
-export function createEvents(start: string, schedule: ScheduleData[]): Promise<Event[]> {
-  return Promise.resolve(schedule.map(({ type, chef, day }) => {
+export async function sanitizeSchedule(schedule: ScheduleData[], start: string): Promise<Event[]> {
+  return schedule.map(({ type, chef, day }) => {
     const summary = `${capitalize(type)} — ${capitalize(chef)}`;
     const date = new Date(start);
     date.setDate(date.getDate() + days[day.toUpperCase()]);
     return new Event(summary, date);
-  }));
+  });
 }
 
 /**
@@ -60,7 +51,9 @@ export function createEvents(start: string, schedule: ScheduleData[]): Promise<E
  * @returns {Promise<object[]>} Promise resolving to an array of Google response objects
  */
 export async function submitEvents(events: Event[]): Promise<object[]> {
+  const { events: calendar } = google.calendar('v3');
   const auth = await client;
+  const calendarId = 'primary';
   const requests = events.map((event) => calendar.insert({
     auth,
     calendarId,

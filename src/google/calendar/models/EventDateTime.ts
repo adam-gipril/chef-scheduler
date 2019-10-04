@@ -8,7 +8,9 @@ import { calendar_v3 as calendarV3 } from 'googleapis/build/src/apis/calendar/v3
  * @returns {string} String conversion of the input number, with single left-side zero-pad on values
  * less than 10
  */
-const conform = (value: number): string => (value < 10 ? `0${value}` : `${value}`);
+function conform(value: number): string {
+  return value < 10 ? `0${value}` : `${value}`;
+}
 
 /**
  * Represents a date conforming to the Google Calendar API's `EventDateTime` type interface.

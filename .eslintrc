@@ -15,6 +15,7 @@
     "@typescript-eslint/no-unused-vars": "error",
     "no-useless-constructor": "off",
     "@typescript-eslint/no-useless-constructor": "error",
-    "jest/prefer-expect-assertions": "off"
+    "jest/prefer-expect-assertions": "off",
+    "lines-between-class-members": "off"
   }
 }
