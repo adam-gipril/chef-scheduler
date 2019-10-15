@@ -56,7 +56,7 @@ day | string | Required | Day of the week on which cooking event occurs | `SUN`,
         "type": "main",
         "chef": "Zana",
         "day": "SUN"
-      },
+      }
   ]
 }
 ```
