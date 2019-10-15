@@ -43,7 +43,7 @@ where a `ScheduleData` object consists of
 
 Field | Type | Required/Optional | Description | Allowed Values
 ------|------|-------------------|-------------|------------
-type | string | Required | The meal the chef is cooking | `meal`, `side`
+type | string | Required | Type of meal the chef is cooking | `main`, `side`
 chef | string | Required | The name of the person cooking
 day | string | Required | The day of the week the chef is cooking | `SUN`, `MON`, `TUE`, `WED`, `THU`
 
