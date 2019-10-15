@@ -39,13 +39,13 @@ Field | Type | Required/Optional | Description
 start-date | string | Required | The first date of the new schedule
 schedule | array of ScheduleData objects | Required | The cooking event information
 
-where `ScheduleData` consists of
+where a `ScheduleData` object consists of
 
-Field | Type | Required/Optional | Description
-------|------|-------------------|------------
-type | string | Required | The meal the chef is cooking
+Field | Type | Required/Optional | Description | Allowed Values
+------|------|-------------------|-------------|------------
+type | string | Required | The meal the chef is cooking | `meal`, `side`
 chef | string | Required | The name of the person cooking
-day | string | Required | The day of the week the chef is cooking
+day | string | Required | The day of the week the chef is cooking | `SUN`, `MON`, `TUE`, `WED`, `THU`
 
 ### Example
 ```
@@ -53,9 +53,9 @@ day | string | Required | The day of the week the chef is cooking
   "start-date": "9/29/2019",
   "schedule":  [
       {
-        "type": "main|side",
+        "type": "main",
         "chef": "Zana",
-        "day": "SUN|MON|TUE|WED|THU"
+        "day": "SUN"
       },
   ]
 }
