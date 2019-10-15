@@ -48,7 +48,7 @@ chef | string | Required | Name of the person cooking
 day | string | Required | Day of the week on which cooking event occurs | `SUN`, `MON`, `TUE`, `WED`, `THU`
 
 ### Example
-```
+```json
 {
   "start-date": "9/29/2019",
   "schedule":  [
