@@ -36,7 +36,7 @@ into Google Calendar events.
 #### Parameters:
 Field | Type | Required/Optional | Description
 ------|------|-------------------|------------
-start-date | string | Required | The first date of the new schedule
+start-date | string | Required | Date of the Sunday which starts the scheduled week
 schedule | array of ScheduleData objects | Required | The cooking event information
 
 where a `ScheduleData` object consists of
