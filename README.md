@@ -45,7 +45,7 @@ Field | Type | Required/Optional | Description | Allowed Values
 ------|------|-------------------|-------------|------------
 type | string | Required | Type of meal the chef is cooking | `main`, `side`
 chef | string | Required | Name of the person cooking
-day | string | Required | The day of the week the chef is cooking | `SUN`, `MON`, `TUE`, `WED`, `THU`
+day | string | Required | Day of the week on which cooking event occurs | `SUN`, `MON`, `TUE`, `WED`, `THU`
 
 ### Example
 ```
