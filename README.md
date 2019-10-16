@@ -20,11 +20,46 @@ into Google Calendar events.
 
 ## Table of Contents
 
+1. [API](#api)
 1. [Developing](#developing)
 1. [Documentation](#documentation)
 1. [Deploying](#deploying)
 1. [Contributing](#contributing)
 1. [Links](#links)
+
+## API
+
+### Endpoint: `/schedule`
+
+#### Method: `POST`
+
+#### Parameters:
+Field | Type | Required/Optional | Description
+------|------|-------------------|------------
+start-date | string | Required | Date of the Sunday which starts the scheduled week
+schedule | array of `ScheduleData` objects | Required | Cooking event information
+
+where a `ScheduleData` object consists of
+
+Field | Type | Required/Optional | Description | Allowed Values
+------|------|-------------------|-------------|------------
+type | string | Required | Type of meal the chef is cooking | `main`, `side`
+chef | string | Required | Name of the person cooking
+day | string | Required | Day of the week on which cooking event occurs | `SUN`, `MON`, `TUE`, `WED`, `THU`
+
+### Example
+```json
+{
+  "start-date": "9/29/2019",
+  "schedule":  [
+      {
+        "type": "main",
+        "chef": "Zana",
+        "day": "SUN"
+      }
+  ]
+}
+```
 
 ## Developing
 
