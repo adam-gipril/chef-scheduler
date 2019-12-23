@@ -11,10 +11,11 @@
   "scripts": {
     "docs": "rm -rf docs && jsdoc -c ./jsdoc.json -d ./docs -r && open docs/index.html",
     "lint": "eslint src --ext ts",
+    "format": "prettier --write \"@(src|tests)/**/*@(.ts|.js|.md)\"",
     "build": "rm -rf dist && tsc -p tsconfig.json",
     "build:watch": "rm -rf dist && tsc -w",
-    "start": "node dist/index.js",
-    "start:watch": "nodemon dist/index.js",
+    "start": "node dist/server.js",
+    "start:watch": "nodemon dist/server.js",
     "test": "jest"
   },
   "author": "Adam Gipril <adam.gipril@icloud.com>",
