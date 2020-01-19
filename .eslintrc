@@ -17,6 +17,7 @@
     "no-useless-constructor": "off",
     "@typescript-eslint/no-useless-constructor": "error",
     "jest/prefer-expect-assertions": "off",
-    "lines-between-class-members": "off"
+    "lines-between-class-members": "off",
+    "no-underscore-dangle": "off"
   }
 }

@@ -8,10 +8,15 @@ import moment from 'moment';
  * @implements {Schema$EventDateTime}
  */
 export default class EventDateTime implements calendarV3.Schema$EventDateTime {
+  /** Date format Google's calendar api expects */
   static readonly dateFormat = 'YYYY-MM-DD';
-  date: string;
+  private _date: string;
+
+  get date() {
+    return this._date;
+  }
 
   constructor(date: Date) {
-    this.date = moment(date).format(EventDateTime.dateFormat);
+    this._date = moment(date).format(EventDateTime.dateFormat);
   }
 }
