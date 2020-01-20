@@ -15,10 +15,12 @@ export async function submitEvents(events: Event[]): Promise<object[]> {
   const auth = await googleClient;
   const calendarId = 'primary';
   const { events: calendar } = google.calendar('v3');
-  const requests = events.map((event) => calendar.insert({
-    auth,
-    calendarId,
-    requestBody: event,
-  }));
+  const requests = events.map(event =>
+    calendar.insert({
+      auth,
+      calendarId,
+      requestBody: event,
+    }),
+  );
   return Promise.all(requests);
 }
