@@ -2,15 +2,11 @@ import moment from 'moment';
 import { Event, EventDateTime } from '..';
 
 describe('model: Event', () => {
-  let event: Event;
   const summary = 'my event';
   const date = moment().toDate();
+  const event = new Event({ summary, date });
 
   describe('constructor', () => {
-    beforeAll(() => {
-      event = new Event({ summary, date });
-    });
-
     it('sets the summary of the event', () => {
       expect(event.summary).toBe(summary);
     });
