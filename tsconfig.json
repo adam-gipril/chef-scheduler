@@ -4,16 +4,13 @@
     "module": "CommonJS",
     "esModuleInterop": true,
     "sourceMap": true,
+    "typeRoots": ["node_modules/@types", "src/@types"],
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     }
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
 }
