@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { Event } from '.';
 import capitalize from '@/utils/capitalize';
 
@@ -6,23 +7,31 @@ import capitalize from '@/utils/capitalize';
  *
  * @interface
  */
-interface ScheduleData {
-  type: string,
-  chef: string,
-  day: string,
+export interface ScheduleData {
+  type: string;
+  chef: string;
+  day: string;
 }
 
-enum days { SUN, MON, TUE, WED, THU }
+enum days {
+  SUN,
+  MON,
+  TUE,
+  WED,
+  THU,
+}
 
 export default class Schedule {
-  events: Event[];
+  constructor(public events: Event[]) {}
 
-  static fromScheduleData(scheduleData: ScheduleData[], start: string): Event[] {
-    return scheduleData.map(({ type, chef, day }) => {
-      const summary = `${capitalize(type)} — ${capitalize(chef)}`;
-      const date = new Date(start);
-      date.setDate(date.getDate() + days[day.toUpperCase()]);
-      return new Event({ summary, date });
-    });
+  static fromScheduleData(scheduleData: ScheduleData[], start: string): Schedule {
+    return new Schedule(
+      scheduleData.map(({ type, chef, day }) => {
+        const summary = `${capitalize(type)} — ${capitalize(chef)}`;
+        const date = moment(start, 'YYYY-MM-DD');
+        date.add(days[day.toUpperCase()], 'days');
+        return new Event({ summary, date: date.toDate() });
+      }),
+    );
   }
 }

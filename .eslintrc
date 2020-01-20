@@ -19,6 +19,8 @@
     "jest/prefer-expect-assertions": "off",
     "lines-between-class-members": "off",
     "no-underscore-dangle": "off",
-    "jest/no-hooks": "off"
+    "jest/no-hooks": "off",
+    "no-empty": "off",
+    "no-empty-function": "off"
   }
 }
