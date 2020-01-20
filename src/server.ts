@@ -1,5 +1,5 @@
-import * as express from 'express';
-import * as calendarService from '@/services/calendar';
+import express from 'express';
+import { GoogleCalendarService } from '@/services';
 import { Schedule } from '@/models';
 
 const app = express();
@@ -11,7 +11,7 @@ app.post('/schedule', async ({ body }, res) => {
     const { schedule: scheduleData, 'start-date': start } = body;
     const schedule = Schedule.fromScheduleData(scheduleData, start);
     try {
-      await calendarService.submitEvents(schedule.events);
+      await GoogleCalendarService.addEvents(schedule.events);
       res.sendStatus(201);
     } catch (err) {
       res.sendStatus(502);
