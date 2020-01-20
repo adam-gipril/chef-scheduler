@@ -23,6 +23,7 @@
     "no-empty": "off",
     "no-empty-function": "off",
     "import/prefer-default-export": "off",
+    "import/extensions": "off",
     "arrow-parens": ["error", "as-needed"],
     "comma-dangle": ["error", "always-multiline"],
     "implicit-arrow-linebreak": "off",

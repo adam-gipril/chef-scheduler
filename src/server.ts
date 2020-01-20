@@ -8,10 +8,10 @@ const server = app.listen(process.env.PORT || '4003');
 app.use(express.json()); // parsing of JSON request bodies
 app.post('/schedule', async ({ body }, res) => {
   try {
-    const { schedule, 'start-date': start } = body;
-    const events = Schedule.fromScheduleData(schedule, start);
+    const { schedule: scheduleData, 'start-date': start } = body;
+    const schedule = Schedule.fromScheduleData(scheduleData, start);
     try {
-      await calendarService.submitEvents(events);
+      await calendarService.submitEvents(schedule.events);
       res.sendStatus(201);
     } catch (err) {
       res.sendStatus(502);
