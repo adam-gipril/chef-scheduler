@@ -2,12 +2,13 @@
   "name": "chef-cal-integration",
   "version": "1.0.0",
   "description": "Google Calendar Integration for chef scheduler",
+  "license": "ISC",
+  "author": "Adam Gipril <adam.gipril@icloud.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/bikeshaman/chef-cal-integration.git"
   },
   "main": "dist/index.js",
-  "type": "module",
   "scripts": {
     "docs": "rm -rf docs && jsdoc -c ./jsdoc.json -d ./docs -r && open docs/index.html",
     "lint": "eslint src --ext ts",
@@ -18,12 +19,11 @@
     "start:watch": "nodemon dist/server.js",
     "test": "jest"
   },
-  "author": "Adam Gipril <adam.gipril@icloud.com>",
-  "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
     "google-auth-library": "^5.9.1",
     "googleapis": "^47.0.0",
+    "module-alias": "^2.2.2",
     "moment": "^2.24.0"
   },
   "devDependencies": {
@@ -45,6 +45,9 @@
     "supertest": "^4.0.2",
     "ts-jest": "^24.3.0",
     "typescript": "^3.7.5"
+  },
+  "_moduleAliases": {
+    "@": "dist"
   },
   "jest": {
     "preset": "ts-jest",
