@@ -1,8 +1,8 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "extends": ["airbnb-base", "plugin:jest/all"],
-  "plugins": ["@typescript-eslint"],
   "env": { "node": true },
+  "extends": ["airbnb-base", "plugin:jest/all"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "settings": {
     "import/resolver": {
       "node": {
@@ -12,21 +12,21 @@
     }
   },
   "rules": {
-    "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "error",
-    "no-useless-constructor": "off",
     "@typescript-eslint/no-useless-constructor": "error",
-    "jest/prefer-expect-assertions": "off",
-    "lines-between-class-members": "off",
-    "no-underscore-dangle": "off",
-    "jest/no-hooks": "off",
-    "no-empty": "off",
-    "no-empty-function": "off",
-    "import/prefer-default-export": "off",
-    "import/extensions": "off",
     "arrow-parens": ["error", "as-needed"],
     "comma-dangle": ["error", "always-multiline"],
+    "function-paren-newline": "off",
     "implicit-arrow-linebreak": "off",
-    "function-paren-newline": "off"
+    "import/extensions": "off",
+    "import/prefer-default-export": "off",
+    "jest/no-hooks": "off",
+    "jest/prefer-expect-assertions": "off",
+    "lines-between-class-members": "off",
+    "no-empty": "off",
+    "no-empty-function": "off",
+    "no-underscore-dangle": "off",
+    "no-unused-vars": "off",
+    "no-useless-constructor": "off"
   }
 }
