@@ -3,10 +3,10 @@ import { EventDateTime } from '.';
 
 /** Represents a calendar event conforming to the Google Calendar API's `Event` type interface. */
 export default class Event implements calendarV3.Schema$Event {
-  summary: string;
-  description?: string;
   start: EventDateTime;
   end: EventDateTime;
+  summary: string;
+  description?: string;
 
   /**
    * Create an all-day Google Calendar event ready to be added to a calendar

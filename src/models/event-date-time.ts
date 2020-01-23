@@ -5,11 +5,7 @@ import moment from 'moment';
 export default class EventDateTime implements calendarV3.Schema$EventDateTime {
   /** Date format Google's calendar API expects */
   static readonly dateFormat = 'YYYY-MM-DD';
-  private _date: string;
-
-  get date() {
-    return this._date;
-  }
+  readonly date: string;
 
   /**
    * Create an EventDateTime for an all-day Google Calendar event
@@ -17,6 +13,6 @@ export default class EventDateTime implements calendarV3.Schema$EventDateTime {
    * @param {Date} date Day on which the all-day event falls
    */
   constructor(date: Date) {
-    this._date = moment(date).format(EventDateTime.dateFormat);
+    this.date = moment(date).format(EventDateTime.dateFormat);
   }
 }
