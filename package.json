@@ -12,7 +12,7 @@
   "scripts": {
     "docs": "rm -rf docs && jsdoc -c ./jsdoc.json -d ./docs -r && open docs/index.html",
     "lint": "eslint src --ext ts",
-    "format": "prettier --write \"src/**/*@(.ts|.js|.md)\"",
+    "format": "prettier --write \"**/*@(.ts|.js|.md)\"",
     "build": "rm -rf dist && tsc -p tsconfig.json",
     "build:watch": "rm -rf dist && tsc -w",
     "start": "NODE_ENV=production node dist/server.js",

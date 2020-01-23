@@ -34,29 +34,31 @@ into Google Calendar events.
 #### Method: `POST`
 
 #### Parameters:
-Field | Type | Required/Optional | Description
-------|------|-------------------|------------
-start-date | string | Required | Date of the Sunday which starts the scheduled week
-schedule | array of `ScheduleData` objects | Required | Cooking event information
+
+| Field      | Type                            | Required/Optional | Description                                        |
+| ---------- | ------------------------------- | ----------------- | -------------------------------------------------- |
+| start-date | string                          | Required          | Date of the Sunday which starts the scheduled week |
+| schedule   | array of `ScheduleData` objects | Required          | Cooking event information                          |
 
 where a `ScheduleData` object consists of
 
-Field | Type | Required/Optional | Description | Allowed Values
-------|------|-------------------|-------------|------------
-type | string | Required | Type of meal the chef is cooking | `main`, `side`
-chef | string | Required | Name of the person cooking
-day | string | Required | Day of the week on which cooking event occurs | `SUN`, `MON`, `TUE`, `WED`, `THU`
+| Field | Type   | Required/Optional | Description                                   | Allowed Values                    |
+| ----- | ------ | ----------------- | --------------------------------------------- | --------------------------------- |
+| type  | string | Required          | Type of meal the chef is cooking              | `main`, `side`                    |
+| chef  | string | Required          | Name of the person cooking                    |
+| day   | string | Required          | Day of the week on which cooking event occurs | `SUN`, `MON`, `TUE`, `WED`, `THU` |
 
 ### Example
+
 ```json
 {
   "start-date": "9/29/2019",
-  "schedule":  [
-      {
-        "type": "main",
-        "chef": "Zana",
-        "day": "SUN"
-      }
+  "schedule": [
+    {
+      "type": "main",
+      "chef": "Zana",
+      "day": "SUN"
+    }
   ]
 }
 ```
@@ -65,9 +67,9 @@ day | string | Required | Day of the week on which cooking event occurs | `SUN`,
 
 ### Prerequisites
 
-* [Node.js](https://nodejs.org/en/download/) (12.4.x)
-* [NVM](https://github.com/nvm-sh/nvm/blob/master/README.md)
-* [NPM](https://www.npmjs.com)
+- [Node.js](https://nodejs.org/en/download/) (12.4.x)
+- [NVM](https://github.com/nvm-sh/nvm/blob/master/README.md)
+- [NPM](https://www.npmjs.com)
 
 ### Cloning the project and installing dependencies
 
@@ -142,12 +144,12 @@ something fails on this service, so no big deal.
 
 ## Links
 
-* [Chef Scheduler](https://github.com/zjipsen/chef-scheduler)
-* [Chef Cal Integration](https://github.com/bikeshaman/chef-cal-integration)
-* [Google Calendar API](https://developers.google.com/calendar)
-* [Using OAuth 2.0 for Server to Server Applications](https://developers.google.com/identity/protocols/OAuth2ServiceAccount)
-* [Node.js](https://nodejs.org/en/download/)
-* [NPM](https://www.npmjs.com)
-* [Nodemon](https://nodemon.io/)
-* [NVM](https://github.com/nvm-sh/nvm/blob/master/README.md)
-* [JSDoc](https://devdocs.io/jsdoc/)
+- [Chef Scheduler](https://github.com/zjipsen/chef-scheduler)
+- [Chef Cal Integration](https://github.com/bikeshaman/chef-cal-integration)
+- [Google Calendar API](https://developers.google.com/calendar)
+- [Using OAuth 2.0 for Server to Server Applications](https://developers.google.com/identity/protocols/OAuth2ServiceAccount)
+- [Node.js](https://nodejs.org/en/download/)
+- [NPM](https://www.npmjs.com)
+- [Nodemon](https://nodemon.io/)
+- [NVM](https://github.com/nvm-sh/nvm/blob/master/README.md)
+- [JSDoc](https://devdocs.io/jsdoc/)
