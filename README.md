@@ -22,6 +22,7 @@ into Google Calendar events.
 
 1. [API](#api)
 1. [Developing](#developing)
+1. [Testing](#testing)
 1. [Documentation](#documentation)
 1. [Deploying](#deploying)
 1. [Contributing](#contributing)
@@ -35,10 +36,10 @@ into Google Calendar events.
 
 #### Parameters:
 
-| Field      | Type                            | Required/Optional | Description                                        |
-| ---------- | ------------------------------- | ----------------- | -------------------------------------------------- |
-| start-date | string                          | Required          | Date of the Sunday which starts the scheduled week |
-| schedule   | array of `ScheduleData` objects | Required          | Cooking event information                          |
+| Field      | Type                                   | Required/Optional | Description                                        |
+| ---------- | -------------------------------------- | ----------------- | -------------------------------------------------- |
+| start-date | string (`YYYY-MM-DD` format preferred) | Required          | Date of the Sunday which starts the scheduled week |
+| schedule   | array of `ScheduleData` objects        | Required          | Cooking event information                          |
 
 where a `ScheduleData` object consists of
 
@@ -52,7 +53,7 @@ where a `ScheduleData` object consists of
 
 ```json
 {
-  "start-date": "9/29/2019",
+  "start-date": "2019-09-29",
   "schedule": [
     {
       "type": "main",
@@ -90,6 +91,20 @@ npm run build       # compiles the project
 npm run build:watch # compiles the project and watches for changes
 ```
 
+### Running the server
+
+The server can be started using one of the following commands. Port 4003 is default, and can be
+overridden by preceding either command with `PORT=<desired port>`.
+
+```bash
+npm start           # runs the server
+npm run start:watch # runs the server using nodemon to watch for changes
+```
+
+Expect the `start:watch` script to improve in the near future with
+[`ts-node`](https://github.com/TypeStrong/ts-node)! It will no longer be necessary to run
+`build:watch` in a separate terminal.
+
 ### Authentication
 
 This application is configured to work with Google service accounts having the
@@ -102,18 +117,21 @@ through the [Google Cloud Platform console](https://console.cloud.google.com/) f
 account.
 
 For more information on OAuth 2.0, Google service accounts, and obtaining the requisite credentials
-to make successful requests, see
+to make successful requests to Google, see
 [Using OAuth 2.0 for Server to Server Applications](https://developers.google.com/identity/protocols/OAuth2ServiceAccount).
 
-### Running the server
+## Testing
 
-The server can be started using one of the following commands. Port 4003 is default, and can be
-overridden by preceding either command with `PORT=<desired port>`.
+Unit tests in this project are written using [Jest](https://jestjs.io). At the time of this writing,
+the project has 100% test coverage. The following commands are available for running the tests.
 
 ```bash
-npm start           # runs the server
-npm run start:watch # runs the server using nodemon to watch for changes
+npm run test          # runs all tests
+npm run test:coverage # runs all tests, and outputs test coverage reports locally
 ```
+
+I also recommend the Jest extension for VSCode, which runs all tests in watch mode for you, with
+feedback on test status visualized directly in your IDE.
 
 ## Documentation
 
@@ -148,8 +166,11 @@ something fails on this service, so no big deal.
 - [Chef Cal Integration](https://github.com/bikeshaman/chef-cal-integration)
 - [Google Calendar API](https://developers.google.com/calendar)
 - [Using OAuth 2.0 for Server to Server Applications](https://developers.google.com/identity/protocols/OAuth2ServiceAccount)
+- [Google Cloud Platform](https://console.cloud.google.com/)
 - [Node.js](https://nodejs.org/en/download/)
 - [NPM](https://www.npmjs.com)
 - [Nodemon](https://nodemon.io/)
 - [NVM](https://github.com/nvm-sh/nvm/blob/master/README.md)
+- [Jest](https://jestjs.io)
 - [JSDoc](https://devdocs.io/jsdoc/)
+- [Heroku](https://www.heroku.com/)
