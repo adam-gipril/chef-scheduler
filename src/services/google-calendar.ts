@@ -4,7 +4,7 @@ import { Event } from '@/models';
 
 /** Interface for Google's Calendar API */
 export default class GoogleCalendarService {
-  /** Provides service-to-service authentication for Google Calendar */
+  /** Provides service account authentication for Google Calendar */
   private static readonly googleAuthInstance = new google.auth.GoogleAuth({
     credentials: JSON.parse(process.env.CREDENTIALS),
     scopes: ['https://www.googleapis.com/auth/calendar'],

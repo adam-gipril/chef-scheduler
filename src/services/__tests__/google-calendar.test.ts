@@ -1,7 +1,7 @@
 import { GoogleCalendarService } from '..';
 import { Event } from '@/models';
 
-const insert = jest.fn();
+const mockInsert = jest.fn();
 jest.mock('googleapis', () => ({
   google: {
     auth: {
@@ -9,7 +9,7 @@ jest.mock('googleapis', () => ({
         getClient = () => ({ email: 'my service email' });
       },
     },
-    calendar: () => ({ events: { insert } }),
+    calendar: () => ({ events: { insert: mockInsert } }),
   },
 }));
 
@@ -33,31 +33,31 @@ describe('service: GoogleCalendarService', () => {
       });
 
       it("calls on GCal insert with JWT obtained from service's GoogleAuth instance", () => {
-        insert.mock.calls.forEach((call: [MockInsertArg]) => {
+        mockInsert.mock.calls.forEach((call: [MockInsertArg]) => {
           expect(call).toHaveLength(1);
           expect(call[0].auth).toStrictEqual({ email: 'my service email' });
         });
       });
 
       it('calls on GCal insert with default calendarId = "primary"', () => {
-        insert.mock.calls.forEach((call: [MockInsertArg]) => {
+        mockInsert.mock.calls.forEach((call: [MockInsertArg]) => {
           expect(call).toHaveLength(1);
           expect(call[0].calendarId).toBe('primary');
         });
       });
 
       it('calls on GCal insert with passed-in calendarId', async () => {
-        insert.mockClear();
+        mockInsert.mockClear();
         await GoogleCalendarService.addEvents(events, 'secondary');
-        insert.mock.calls.forEach((call: [MockInsertArg]) => {
+        mockInsert.mock.calls.forEach((call: [MockInsertArg]) => {
           expect(call).toHaveLength(1);
           expect(call[0].calendarId).toBe('secondary');
         });
       });
 
       it('calls on GCal insert once for each passed-in event', () => {
-        expect(insert).toHaveBeenCalledTimes(events.length);
-        insert.mock.calls.forEach((call: [MockInsertArg], i: number) => {
+        expect(mockInsert).toHaveBeenCalledTimes(events.length);
+        mockInsert.mock.calls.forEach((call: [MockInsertArg], i: number) => {
           expect(call).toHaveLength(1);
           expect(call[0].requestBody).toBe(events[i]);
         });

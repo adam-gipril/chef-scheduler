@@ -2,8 +2,8 @@ import moment from 'moment';
 import { Event, EventDateTime } from '..';
 
 describe('model: Event', () => {
-  const summary = 'my event';
   const date = moment().toDate();
+  const summary = 'my event';
   const event = new Event({ summary, date });
 
   describe('constructor', () => {

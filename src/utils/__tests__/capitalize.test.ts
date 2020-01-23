@@ -5,7 +5,7 @@ describe('util: capitalize', () => {
   const capitalized = capitalize(string);
 
   it('capitalizes the first character of a string', () => {
-    expect(capitalized[0]).toBe('M');
+    expect(capitalized[0]).toBe(string[0].toUpperCase());
   });
 
   it('converts every other character to lowercase', () => {

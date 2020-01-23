@@ -1,12 +1,13 @@
 import express from 'express';
-import { GoogleCalendarService } from '@/services';
 import { Schedule } from '@/models';
+import { GoogleCalendarService } from '@/services';
 
 const app = express();
 
 app.use(express.json()); // parsing of JSON request bodies
 app.post('/schedule', async ({ body }, res) => {
   try {
+    // TODO typing on request body
     const { schedule: scheduleData, 'start-date': start } = body;
     const schedule = Schedule.fromScheduleData(scheduleData, start);
     try {
