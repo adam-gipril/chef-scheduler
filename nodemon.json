@@ -1,0 +1,16 @@
+{
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "exec": "node --inspect -r ts-node/register",
+  "ext": "ts",
+  "ignore": [
+    "node_modules",
+    "**/__tests__/*"
+  ],
+  "restartable": "rs",
+  "verbose": true,
+  "watch": [
+    "src"
+  ]
+}
