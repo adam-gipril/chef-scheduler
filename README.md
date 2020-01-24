@@ -101,7 +101,7 @@ npm start           # runs the server
 npm run start:watch # runs the server using nodemon to watch for changes
 ```
 
-Nodemon is configured to run node registered with `ts-node`, so changes to TypeScript files
+Nodemon is configured to run Node registered with `ts-node`, so changes to TypeScript files
 will trigger a restart of the server.
 
 ### Debugging
@@ -111,11 +111,11 @@ pre-configured:
 
 #### Nodemon with Chrome DevTools
 
-The `nodemon.json` configuration runs node in inspect mode. When Chrome detects a node process
+The `nodemon.json` configuration runs Node in inspect mode. When Chrome detects a Node process
 running in inspect mode, an icon will appear in the top left corner of any open DevTools panel.
 A click on that icon will open a new instance of DevTools, attached to the Node process:
 
-<span style="display: flex; justify-content: center;">![DevTools](/assets/images/devtools.png)</span>
+![DevTools Node icon](/assets/images/devtools.png)
 
 #### Nodemon launched with VSCode debugger
 
@@ -130,7 +130,7 @@ on the VSCode debugger.
 In addition to the "Launch via NPM" configuration, an "Attach by Process ID" configuration is
 available. This allows the VSCode debugger to attach to an already-running instance of the server,
 without the process needing to be in inspect mode. Simply run the server, run the debugger, and
-select to which node process the debugger should attach.
+select to which Node process the debugger should attach.
 
 ### Authentication
 
