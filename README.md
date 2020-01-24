@@ -112,7 +112,7 @@ pre-configured:
 #### Nodemon with Chrome DevTools
 
 The `nodemon.json` configuration runs node in inspect mode. When Chrome detects a node process
-running in inspect mode, a Node icon will appear in the top left corner of any open DevTools panel.
+running in inspect mode, an icon will appear in the top left corner of any open DevTools panel.
 A click on that icon will open a new instance of DevTools, attached to the Node process:
 
 ![DevTools](/assets/images/devtools.png)
@@ -120,14 +120,14 @@ A click on that icon will open a new instance of DevTools, attached to the Node 
 #### Nodemon launched with VSCode debugger
 
 A VSCode debugger configuration named "Launch via NPM" is available. This configuration, when run,
-executes `npm run start:watch`, with the VSCode debugger attached to the process. Breakpoints and
+executes `npm run start:watch` with the VSCode debugger attached to the process. Breakpoints and
 Logpoints can be set in the left gutter of the VSCode editor. Read
 [here](https://code.visualstudio.com/docs/editor/debugging#_debug-actions) for more information
 on the VSCode debugger.
 
 #### VSCode debugger attached to running Nodemon process, or running, built Node process
 
-In addition to the "Launch via NPM" configuration, an "Attach by Process ID" configuration is also
+In addition to the "Launch via NPM" configuration, an "Attach by Process ID" configuration is
 available. This allows the VSCode debugger to attach to an already-running instance of the server,
 without the process needing to be in inspect mode. Simply run the server, run the debugger, and
 select to which node process the debugger should attach.
