@@ -102,7 +102,7 @@ npm run start:watch # runs the server using nodemon to watch for changes
 ```
 
 Nodemon is configured to run node registered with `ts-node`, so changes to TypeScript files
-directly will trigger a restart of the server.Dev
+will trigger a restart of the server.
 
 ### Debugging
 
