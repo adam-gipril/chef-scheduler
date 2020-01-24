@@ -115,9 +115,7 @@ The `nodemon.json` configuration runs node in inspect mode. When Chrome detects 
 running in inspect mode, an icon will appear in the top left corner of any open DevTools panel.
 A click on that icon will open a new instance of DevTools, attached to the Node process:
 
-<div style="text-align: center;">
-  <img src="/assets/images/devtools.png" />
-</div>
+<span style="display: flex; justify-content: center;">![DevTools](/assets/images/devtools.png)</span>
 
 #### Nodemon launched with VSCode debugger
 
