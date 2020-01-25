@@ -4,6 +4,8 @@ import { Event, Schedule } from '@/models';
 import { GoogleCalendarService } from '@/services';
 import { capitalize } from '@/utils';
 
+jest.mock('twilio');
+
 const spyFromScheduleItems = jest.spyOn(Schedule, 'fromScheduleItems');
 const spyAddEvents = jest.spyOn(GoogleCalendarService, 'addEvents').mockResolvedValue();
 
