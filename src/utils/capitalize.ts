@@ -3,6 +3,6 @@
  *
  * @param {string} - The string to capitalize
  */
-export default function capitalize([char, ...string]: string): string {
+export default function capitalize([char, ...string]: string) {
   return `${char.toUpperCase()}${string.join('').toLowerCase()}`;
 }

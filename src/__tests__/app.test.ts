@@ -4,17 +4,17 @@ import { Event, Schedule } from '@/models';
 import { GoogleCalendarService } from '@/services';
 import { capitalize } from '@/utils';
 
-const spyFromScheduleData = jest.spyOn(Schedule, 'fromScheduleData');
+const spyFromScheduleItems = jest.spyOn(Schedule, 'fromScheduleItems');
 const spyAddEvents = jest.spyOn(GoogleCalendarService, 'addEvents').mockResolvedValue();
 
 const startDate = '2019-09-29';
-const schedule = [
+const scheduleItems = [
   { type: 'main', chef: 'Lloyd', day: 'SUN' },
   { type: 'side', chef: 'Harry', day: 'SUN' },
 ];
-const scheduleData = {
+const requestBody = {
   'start-date': startDate,
-  schedule,
+  schedule: scheduleItems,
 };
 
 describe('express server', () => {
@@ -24,18 +24,18 @@ describe('express server', () => {
     describe('post /schedule', () => {
       describe('operations', () => {
         beforeAll(async () => {
-          spyFromScheduleData.mockClear();
+          spyFromScheduleItems.mockClear();
           spyAddEvents.mockClear();
           await request(app)
             .post('/schedule')
-            .send(scheduleData);
+            .send(requestBody);
         });
 
-        it('constructs a schedule from the request body data', () => {
-          expect(spyFromScheduleData).toHaveBeenCalledTimes(1);
-          expect(spyFromScheduleData).toHaveBeenCalledWith(
-            scheduleData.schedule,
-            scheduleData['start-date'],
+        it('constructs a schedule from the request body', () => {
+          expect(spyFromScheduleItems).toHaveBeenCalledTimes(1);
+          expect(spyFromScheduleItems).toHaveBeenCalledWith(
+            requestBody.schedule,
+            requestBody['start-date'],
           );
         });
 
@@ -47,7 +47,7 @@ describe('express server', () => {
             expect(event.start.date).toBe(startDate);
             expect(event.end.date).toBe(startDate);
             expect(event.summary).toBe(
-              `${capitalize(schedule[i].type)} — ${capitalize(schedule[i].chef)}`,
+              `${capitalize(scheduleItems[i].type)} — ${capitalize(scheduleItems[i].chef)}`,
             );
           });
         });
@@ -57,7 +57,7 @@ describe('express server', () => {
         let response: request.Response;
 
         beforeEach(() => {
-          spyFromScheduleData.mockClear();
+          spyFromScheduleItems.mockClear();
           spyAddEvents.mockClear();
         });
 
@@ -69,7 +69,7 @@ describe('express server', () => {
         });
 
         it('responds with 502 "bad gateway" status on failure from Google', async () => {
-          spyFromScheduleData.mockImplementationOnce(() => ({} as any));
+          spyFromScheduleItems.mockImplementationOnce(() => ({} as any));
           spyAddEvents.mockRejectedValueOnce(new Error('error adding events'));
           response = await request(app).post('/schedule');
           expect(response.status).toBe(502);
@@ -78,7 +78,7 @@ describe('express server', () => {
         it('responds with 201 "created" status when all is successful', async () => {
           response = await request(app)
             .post('/schedule')
-            .send(scheduleData);
+            .send(requestBody);
           expect(response.status).toBe(201);
         });
       });
