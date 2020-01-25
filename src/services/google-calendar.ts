@@ -10,6 +10,9 @@ export default class GoogleCalendarService {
     scopes: ['https://www.googleapis.com/auth/calendar'],
   });
 
+  /** Events API for Google Calendar */
+  private static readonly calendarEvents = google.calendar('v3').events;
+
   /** Obtain a JWT to authenticate Google Calendar requests */
   private static getJWT() {
     return this.googleAuthInstance.getClient() as Promise<JWT>;
@@ -23,9 +26,8 @@ export default class GoogleCalendarService {
    */
   static async addEvents(events: Event[], calendarId = 'primary') {
     const auth = await this.getJWT();
-    const { events: calendar } = google.calendar('v3');
     const requests = events.map(event =>
-      calendar.insert({
+      this.calendarEvents.insert({
         auth,
         calendarId,
         requestBody: event,

@@ -2,8 +2,8 @@ import moment from 'moment';
 import { Event, EventDateTime } from '..';
 
 describe('model: Event', () => {
-  const date = moment().toDate();
   const summary = 'my event';
+  const date = moment().toDate();
   const event = new Event({ summary, date });
 
   describe('constructor', () => {
@@ -17,6 +17,7 @@ describe('model: Event', () => {
     });
 
     it('sets the start date equal to the end date', () => {
+      expect(event.start.date).toBe(moment(date).format(EventDateTime.dateFormat));
       expect(event.start).toBe(event.end);
     });
   });

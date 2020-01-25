@@ -1,18 +1,22 @@
+import { google } from 'googleapis';
 import { GoogleCalendarService } from '..';
 import { Event } from '@/models';
 
-const mockInsert = jest.fn();
-jest.mock('googleapis', () => ({
-  google: {
-    auth: {
-      GoogleAuth: class {
-        getClient = () => ({ email: 'my service email' });
+jest.mock('googleapis', () => {
+  const mockInsert = jest.fn();
+  return {
+    google: {
+      auth: {
+        GoogleAuth: class {
+          getClient = () => ({ email: 'my service email' });
+        },
       },
+      calendar: () => ({ events: { insert: mockInsert } }),
     },
-    calendar: () => ({ events: { insert: mockInsert } }),
-  },
-}));
+  };
+});
 
+const mockInsert = google.calendar('v3').events.insert as jest.Mock;
 interface MockInsertArg {
   auth: { email: string };
   calendarId: string;
