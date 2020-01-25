@@ -9,8 +9,8 @@ const spyAddEvents = jest.spyOn(GoogleCalendarService, 'addEvents').mockResolved
 
 const startDate = '2019-09-29';
 const scheduleItems = [
-  { type: 'main', chef: 'Lloyd', day: 'SUN' },
-  { type: 'side', chef: 'Harry', day: 'SUN' },
+  { type: 'Main', chef: 'Lloyd', day: 'SUN' },
+  { type: 'Side', chef: 'Harry', day: 'SUN' },
 ];
 const requestBody = {
   'start-date': startDate,
