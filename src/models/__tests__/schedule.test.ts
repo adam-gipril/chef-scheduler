@@ -1,8 +1,8 @@
 import moment from 'moment';
+import { ScheduleItem } from '@/interfaces';
 import { Schedule } from '..';
-import { ScheduleData } from '../schedule';
 
-const scheduleData: ScheduleData = {
+const scheduleItem: ScheduleItem = {
   type: 'Main',
   chef: 'Lloyd',
   day: 'Sun',
@@ -10,17 +10,17 @@ const scheduleData: ScheduleData = {
 
 describe('model: Schedule', () => {
   describe('methods', () => {
-    describe('static fromScheduleData', () => {
+    describe('static fromScheduleItems', () => {
       const date = moment()
         .day(0)
         .format('YYYY-MM-DD');
-      const schedule = Schedule.fromScheduleData([scheduleData], date);
+      const schedule = Schedule.fromScheduleItems([scheduleItem], date);
 
       it('returns a new Schedule instance', () => {
         expect(schedule).toBeInstanceOf(Schedule);
       });
 
-      it('sets the schedule data', () => {
+      it('sets the schedule', () => {
         const [event] = schedule.events;
         expect(schedule.events).toHaveLength(1);
         expect(event.summary).toContain('Main');

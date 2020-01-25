@@ -39,9 +39,9 @@ into Google Calendar events.
 | Field      | Type                                   | Required/Optional | Description                                        |
 | ---------- | -------------------------------------- | ----------------- | -------------------------------------------------- |
 | start-date | string (`YYYY-MM-DD` format preferred) | Required          | Date of the Sunday which starts the scheduled week |
-| schedule   | array of `ScheduleData` objects        | Required          | Cooking event information                          |
+| schedule   | array of `ScheduleItem` objects        | Required          | Cooking event information                          |
 
-where a `ScheduleData` object consists of
+where a `ScheduleItem` object consists of
 
 | Field | Type   | Required/Optional | Description                                   | Allowed Values                    |
 | ----- | ------ | ----------------- | --------------------------------------------- | --------------------------------- |
