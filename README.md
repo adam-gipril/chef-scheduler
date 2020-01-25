@@ -101,9 +101,36 @@ npm start           # runs the server
 npm run start:watch # runs the server using nodemon to watch for changes
 ```
 
-Expect the `start:watch` script to improve in the near future with
-[`ts-node`](https://github.com/TypeStrong/ts-node)! It will no longer be necessary to run
-`build:watch` in a separate terminal.
+Nodemon is configured to run Node registered with `ts-node`, so changes to TypeScript files
+will trigger a restart of the server.
+
+### Debugging
+
+There are several paths to success for debugging this project. Here are a few options which are
+pre-configured:
+
+#### Nodemon with Chrome DevTools
+
+The `nodemon.json` configuration runs Node in inspect mode. When Chrome detects a Node process
+running in inspect mode, an icon will appear in the top left corner of any open DevTools panel.
+A click on that icon will open a new instance of DevTools, attached to the Node process:
+
+![DevTools Node icon](/assets/images/devtools.png)
+
+#### Nodemon launched with VSCode debugger
+
+A VSCode debugger configuration named "Launch via NPM" is available. This configuration, when run,
+executes `npm run start:watch` with the VSCode debugger attached to the process. Breakpoints and
+Logpoints can be set in the left gutter of the VSCode editor. Read
+[here](https://code.visualstudio.com/docs/editor/debugging#_debug-actions) for more information
+on the VSCode debugger.
+
+#### VSCode debugger attached to running Nodemon process, or running, built Node process
+
+In addition to the "Launch via NPM" configuration, an "Attach by Process ID" configuration is
+available. This allows the VSCode debugger to attach to an already-running instance of the server,
+without the process needing to be in inspect mode. Simply run the server, run the debugger, and
+select to which Node process the debugger should attach.
 
 ### Authentication
 
@@ -126,9 +153,13 @@ Unit tests in this project are written using [Jest](https://jestjs.io). At the t
 the project has 100% test coverage. The following commands are available for running the tests.
 
 ```bash
-npm run test          # runs all tests
-npm run test:coverage # runs all tests, and outputs test coverage reports locally
+npm test              # runs all tests
+npm run test:watch    # runs all tests in watch mode
+npm run test:coverage # outputs test coverage, opens report in a browser
 ```
+
+Additional options can be passed to the test command, separated from npm options with `--`. Read
+[here](https://jestjs.io/docs/en/cli#options) for more information.
 
 I also recommend the Jest extension for VSCode, which runs all tests in watch mode for you, with
 feedback on test status visualized directly in your IDE.

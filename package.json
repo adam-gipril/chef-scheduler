@@ -10,15 +10,16 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "docs": "rm -rf docs && jsdoc -c ./jsdoc.json -d ./docs -r && open docs/index.html",
+    "docs": "rm -rf docs && jsdoc -c jsdoc.json -d docs -r && open docs/index.html",
     "lint": "eslint src --ext ts",
     "format": "prettier --write \"**/*@(.ts|.js|.md)\"",
-    "build": "rm -rf dist && tsc -p tsconfig.json",
-    "build:watch": "rm -rf dist && tsc -w",
+    "build": "rm -rf dist && tsc",
+    "build:watch": "npm run build -- -w",
     "start": "NODE_ENV=production node dist/server.js",
-    "start:watch": "NODE_ENV=development nodemon dist/server.js",
+    "start:watch": "nodemon src/server.ts",
     "test": "NODE_ENV=test jest",
-    "test:coverage": "npm test -- --coverage"
+    "test:watch": "npm test -- --watch",
+    "test:coverage": "npm test -- --coverage && open coverage/lcov-report/index.html"
   },
   "dependencies": {
     "express": "^4.17.1",
@@ -43,10 +44,11 @@
     "jest": "^24.9.0",
     "jsdoc": "^3.6.3",
     "lint-staged": "^10.0.2",
-    "nodemon": "^1.19.4",
+    "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "supertest": "^4.0.2",
     "ts-jest": "^24.3.0",
+    "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   },
   "_moduleAliases": {
