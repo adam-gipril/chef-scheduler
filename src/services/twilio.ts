@@ -4,9 +4,12 @@ import createClient from 'twilio';
 interface SendSMSArgs {
   /** SMS message content */
   body: string;
-  /** Target phone number to which SMS will be sent */
+  /** Target phone number to which SMS will be sent. Must include "+<country code>" */
   to?: string;
-  /** Target group of phone numbers to which SMS will be sent */
+  /**
+   * Target group of phone numbers to which SMS will be sent.
+   * Each number must include "+<country code>"
+   */
   toGroup?: string[];
 }
 
