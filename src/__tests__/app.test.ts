@@ -2,15 +2,15 @@ import request from 'supertest';
 import { app, server } from '..';
 import { Event, Schedule } from '@/models';
 import { GoogleCalendarService } from '@/services';
-import { capitalize } from '@/utils';
 
+jest.mock('twilio');
 const spyFromScheduleItems = jest.spyOn(Schedule, 'fromScheduleItems');
 const spyAddEvents = jest.spyOn(GoogleCalendarService, 'addEvents').mockResolvedValue();
 
 const startDate = '2019-09-29';
 const scheduleItems = [
-  { type: 'main', chef: 'Lloyd', day: 'SUN' },
-  { type: 'side', chef: 'Harry', day: 'SUN' },
+  { type: 'Main', chef: 'Lloyd', day: 'SUN' },
+  { type: 'Side', chef: 'Harry', day: 'SUN' },
 ];
 const requestBody = {
   'start-date': startDate,
@@ -46,9 +46,8 @@ describe('express server', () => {
             expect(event).toBeInstanceOf(Event);
             expect(event.start.date).toBe(startDate);
             expect(event.end.date).toBe(startDate);
-            expect(event.summary).toBe(
-              `${capitalize(scheduleItems[i].type)} — ${capitalize(scheduleItems[i].chef)}`,
-            );
+            expect(event.summary).toContain(scheduleItems[i].type);
+            expect(event.summary).toContain(scheduleItems[i].chef);
           });
         });
       });

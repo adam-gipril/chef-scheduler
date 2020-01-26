@@ -2,6 +2,7 @@ import { google } from 'googleapis';
 import { GoogleCalendarService } from '..';
 import { Event } from '@/models';
 
+jest.mock('twilio');
 jest.mock('googleapis', () => {
   const mockInsert = jest.fn();
   return {

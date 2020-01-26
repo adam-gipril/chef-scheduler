@@ -45,7 +45,7 @@ where a `ScheduleItem` object consists of
 
 | Field | Type   | Required/Optional | Description                                   | Allowed Values                    |
 | ----- | ------ | ----------------- | --------------------------------------------- | --------------------------------- |
-| type  | string | Required          | Type of meal the chef is cooking              | `main`, `side`                    |
+| type  | string | Required          | Type of meal the chef is cooking              | `Main`, `Side`                    |
 | chef  | string | Required          | Name of the person cooking                    |
 | day   | string | Required          | Day of the week on which cooking event occurs | `SUN`, `MON`, `TUE`, `WED`, `THU` |
 
@@ -56,7 +56,7 @@ where a `ScheduleItem` object consists of
   "start-date": "2019-09-29",
   "schedule": [
     {
-      "type": "main",
+      "type": "Main",
       "chef": "Zana",
       "day": "SUN"
     }
