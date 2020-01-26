@@ -22,9 +22,9 @@ interface SendGroupSMSArg {
 /** Interface for Twilio's API */
 export default class TwilioService {
   /** Client through which Twilio requests are made */
-  private static client = createClient(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
+  private static readonly client = createClient(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
   /** Phone number from which chef-cal-integration SMS messages will be sent */
-  private static hostNumber = process.env.HOST_NUMBER;
+  private static readonly hostNumber = process.env.HOST_NUMBER;
 
   /** Send an SMS to a single phone number */
   static async sendSMS(sms: SendSMSArg) {
