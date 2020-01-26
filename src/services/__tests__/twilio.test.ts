@@ -51,6 +51,11 @@ describe('service: TwilioService', () => {
         });
       });
 
+      it('does not call on Twilio service when there are no passed-in targets', async () => {
+        await TwilioService.sendGroupSMS({ body: 'my message to no one!' } as any);
+        expect(mockCreate).not.toHaveBeenCalled();
+      });
+
       it('returns results when all Twilio calls are successful', async () => {
         const [, sms] = messages.valid;
         const resolvedValues = [{ sid: 'beans' }, { sid: 'beans 2' }];
