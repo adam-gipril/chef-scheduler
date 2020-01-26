@@ -54,11 +54,6 @@ describe('express server', () => {
       describe('response status', () => {
         let response: request.Response;
 
-        beforeEach(() => {
-          spyFromScheduleItems.mockClear();
-          spyAddEvents.mockClear();
-        });
-
         it('responds with 400 "bad request" status to invalid requests', async () => {
           response = await request(app)
             .post('/schedule')

@@ -32,7 +32,6 @@ describe('service: GoogleCalendarService', () => {
       ];
 
       beforeEach(async () => {
-        jest.clearAllMocks();
         await GoogleCalendarService.addEvents(events);
       });
 
