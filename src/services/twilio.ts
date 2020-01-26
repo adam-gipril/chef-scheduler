@@ -1,16 +1,22 @@
 import createClient from 'twilio';
 
-/** Arguments expected to TwilioService SMS send methods */
-interface SendSMSArgs {
+/** Argument expected by TwilioService.sendSMS */
+interface SendSMSArg {
   /** SMS message content */
   body: string;
   /** Target phone number to which SMS will be sent. Must include "+<country code>" */
-  to?: string;
+  to: string;
+}
+
+/** Argument expected by TwilioService.sendGroupSMS */
+interface SendGroupSMSArg {
+  /** SMS message content */
+  body: string;
   /**
    * Target group of phone numbers to which SMS will be sent.
    * Each number must include "+<country code>"
    */
-  toGroup?: string[];
+  toGroup: string[];
 }
 
 /** Interface for Twilio's API */
@@ -21,17 +27,15 @@ export default class TwilioService {
   private static hostNumber = process.env.HOST_NUMBER;
 
   /** Send an SMS to a single phone number */
-  static async sendSMS({ body, to }: SendSMSArgs) {
-    // TODO handle errors
-    const sms = await this.client.messages.create({ body, to, from: this.hostNumber });
-    return sms;
+  static async sendSMS(sms: SendSMSArg) {
+    // TODO handle errors and handle absence of, or invalid "to"
+    return await this.client.messages.create({ ...sms, from: this.hostNumber });
   }
 
   /** Send the same SMS to a group of phone numbers */
-  static async sendGroupSMS({ body, toGroup = [] }: SendSMSArgs) {
-    // TODO handle errors
-    const requests = toGroup.map(to => this.sendSMS({ body, to }));
-    const messages = await Promise.all(requests);
-    return messages;
+  static async sendGroupSMS({ body, toGroup = [] }: SendGroupSMSArg) {
+    // TODO handle errors and handle absence of toGroup
+    const requests = toGroup.map(to => this.sendSMS({ body, to }).catch(error => error));
+    return await Promise.all(requests);
   }
 }
