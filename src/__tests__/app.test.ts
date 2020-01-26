@@ -23,9 +23,7 @@ describe('express server', () => {
   describe('endpoints', () => {
     describe('post /schedule', () => {
       describe('operations', () => {
-        beforeAll(async () => {
-          spyFromScheduleItems.mockClear();
-          spyAddEvents.mockClear();
+        beforeEach(async () => {
           await request(app)
             .post('/schedule')
             .send(requestBody);
