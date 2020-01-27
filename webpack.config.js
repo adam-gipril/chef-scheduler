@@ -12,7 +12,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
-    rules: [{ test: /\.ts$/, use: 'ts-loader', exclude: /node_modules/ }],
+    rules: [{ test: /\.ts$/, use: ['babel-loader', 'ts-loader'], exclude: /node_modules/ }],
   },
   resolve: {
     extensions: ['.ts', '.js'],
