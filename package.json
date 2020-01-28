@@ -15,7 +15,7 @@
     "format": "prettier --write \"**/*@(.ts|.js|.md)\"",
     "build": "rm -rf dist && webpack",
     "build:watch": "npm run build -- -w",
-    "start": "NODE_ENV=production node dist",
+    "start": "NODE_ENV=production npm run build && node dist",
     "start:watch": "nodemon src/server.ts",
     "test": "NODE_ENV=test jest",
     "test:watch": "npm test -- --watch",
@@ -25,6 +25,7 @@
     "express": "^4.17.1",
     "google-auth-library": "^5.9.1",
     "googleapis": "^47.0.0",
+    "module-alias": "^2.2.2",
     "moment": "^2.24.0",
     "twilio": "^3.39.3"
   },
@@ -59,6 +60,9 @@
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-node-externals": "^1.7.2"
+  },
+  "_moduleAliases": {
+    "@": "src"
   },
   "husky": {
     "hooks": {
