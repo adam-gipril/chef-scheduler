@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { ScheduleItem } from '@/interfaces';
-import { Event } from '.';
+import Event from './event';
 import capitalize from '@/utils/capitalize';
 
 /** Maps day of the week to 0–4 numeric value */
