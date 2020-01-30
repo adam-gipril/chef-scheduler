@@ -15,9 +15,9 @@
     "format": "prettier --write \"**/*@(.ts|.js|.md)\"",
     "build": "rm -rf dist && webpack",
     "build:watch": "npm run build -- -w",
-    "start": "NODE_ENV=production npm run build && node dist",
+    "start": "node dist",
     "start:watch": "nodemon src/server.ts",
-    "test": "PORT=4004 NODE_ENV=test jest",
+    "test": "jest",
     "test:watch": "npm test -- --watch",
     "test:coverage": "npm test -- --coverage && open coverage/lcov-report/index.html"
   },
