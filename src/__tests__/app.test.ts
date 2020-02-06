@@ -1,10 +1,10 @@
 import request from 'supertest';
-import { app, server } from '..';
-import { Event, Schedule } from '@/models';
+import { ChefSchedule, Event } from '@/models';
 import { GoogleCalendarService } from '@/services';
+import { app, server } from '..';
 
 jest.mock('twilio');
-const spyFromScheduleItems = jest.spyOn(Schedule, 'fromScheduleItems');
+const spyFromScheduleItems = jest.spyOn(ChefSchedule, 'fromScheduleItems');
 const spyAddEvents = jest.spyOn(GoogleCalendarService, 'addEvents').mockResolvedValue();
 
 const startDate = '2019-09-29';

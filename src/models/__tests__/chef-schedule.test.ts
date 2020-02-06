@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { ScheduleItem } from '@/interfaces';
-import { Schedule } from '..';
+import { ChefSchedule } from '..';
 
 const scheduleItem: ScheduleItem = {
   type: 'Main',
@@ -8,16 +8,16 @@ const scheduleItem: ScheduleItem = {
   day: 'Sun',
 };
 
-describe('model: Schedule', () => {
+describe('model: ChefSchedule', () => {
   describe('methods', () => {
     describe('static fromScheduleItems', () => {
       const date = moment()
         .day(0)
         .format('YYYY-MM-DD');
-      const schedule = Schedule.fromScheduleItems([scheduleItem], date);
+      const schedule = ChefSchedule.fromScheduleItems([scheduleItem], date);
 
       it('returns a Schedule instance', () => {
-        expect(schedule).toBeInstanceOf(Schedule);
+        expect(schedule).toBeInstanceOf(ChefSchedule);
       });
 
       it('sets the schedule', () => {
