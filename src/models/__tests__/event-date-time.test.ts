@@ -4,7 +4,7 @@ import { EventDateTime } from '..';
 describe('model: EventDateTime', () => {
   describe('constructor', () => {
     it('formats date as Google expects', () => {
-      const { date } = new EventDateTime(moment().toDate());
+      const { date } = new EventDateTime(moment());
       expect(moment(date, EventDateTime.dateFormat).isValid()).toBe(true);
     });
   });

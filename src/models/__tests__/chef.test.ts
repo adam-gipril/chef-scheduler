@@ -12,15 +12,11 @@ const person: Person = {
 const exclusions = [
   new Event({
     summary: 'my Monday event',
-    date: moment()
-      .day(8)
-      .toDate(),
+    start: moment().day(8),
   }),
   new Event({
     summary: 'my Tuesday event',
-    date: moment()
-      .day(9)
-      .toDate(),
+    start: moment().day(9),
   }),
 ];
 

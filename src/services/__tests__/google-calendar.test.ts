@@ -1,6 +1,7 @@
 import { google } from 'googleapis';
-import { GoogleCalendarService } from '..';
+import moment from 'moment';
 import { Event } from '@/models';
+import { GoogleCalendarService } from '..';
 
 jest.mock('twilio');
 jest.mock('googleapis', () => {
@@ -28,8 +29,8 @@ describe('service: GoogleCalendarService', () => {
   describe('methods', () => {
     describe('static addEvents', () => {
       const events = [
-        new Event({ summary: 'my event', date: new Date() }),
-        new Event({ summary: 'my other event', date: new Date() }),
+        new Event({ summary: 'my event', start: moment() }),
+        new Event({ summary: 'my other event', start: moment() }),
       ];
 
       beforeEach(async () => {
