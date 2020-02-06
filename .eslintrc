@@ -25,9 +25,11 @@
     "lines-between-class-members": "off",
     "no-empty": "off",
     "no-empty-function": "off",
+    "no-plusplus": "off",
     "no-return-await": "off",
     "no-underscore-dangle": "off",
     "no-unused-vars": "off",
-    "no-useless-constructor": "off"
+    "no-useless-constructor": "off",
+    "object-curly-newline": ["error", { "multiline": true }]
   }
 }

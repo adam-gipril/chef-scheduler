@@ -4,11 +4,13 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch via NPM",
-      "runtimeExecutable": "npm",
+      "name": "Run node script",
+      "runtimeExecutable": "node",
       "runtimeArgs": [
-        "run",
-        "start:watch"
+        "--inspect",
+        "-r",
+        "ts-node/register",
+        "${input:path}"
       ],
       "port": 9229,
       "skipFiles": [
@@ -25,4 +27,12 @@
       ]
     }
   ],
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "path",
+      "description": "Path to node script to run",
+      "default": "src/server.ts"
+    }
+  ]
 }

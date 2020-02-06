@@ -16,7 +16,7 @@ describe('model: Schedule', () => {
         .format('YYYY-MM-DD');
       const schedule = Schedule.fromScheduleItems([scheduleItem], date);
 
-      it('returns a new Schedule instance', () => {
+      it('returns a Schedule instance', () => {
         expect(schedule).toBeInstanceOf(Schedule);
       });
 

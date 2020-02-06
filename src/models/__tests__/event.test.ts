@@ -3,8 +3,9 @@ import { Event, EventDateTime } from '..';
 
 describe('model: Event', () => {
   const summary = 'my event';
-  const date = moment().toDate();
-  const event = new Event({ summary, date });
+  const start = moment();
+  const end = moment().add(1, 'day');
+  let event = new Event({ summary, start });
 
   describe('constructor', () => {
     it('sets the summary of the event', () => {
@@ -16,9 +17,16 @@ describe('model: Event', () => {
       expect(event.end).toBeInstanceOf(EventDateTime);
     });
 
-    it('sets the start date equal to the end date', () => {
-      expect(event.start.date).toBe(moment(date).format(EventDateTime.dateFormat));
+    it('sets the start date equal to the end date by default', () => {
+      expect(event.start.date).toBe(start.format(EventDateTime.dateFormat));
       expect(event.start).toBe(event.end);
+    });
+
+    it('sets the passed-in end date', () => {
+      event = new Event({ summary, start, end });
+      expect(event.start.date).toBe(start.format(EventDateTime.dateFormat));
+      expect(event.end.date).toBe(end.format(EventDateTime.dateFormat));
+      expect(event.start).not.toBe(event.end);
     });
   });
 });
