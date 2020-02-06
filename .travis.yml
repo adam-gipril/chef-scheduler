@@ -1,0 +1,16 @@
+os: linux
+language: node_js
+node_js:
+  - 'lts/*'
+cache:
+  - npm
+
+install:
+  - npm ci
+
+jobs:
+  include:
+    - name: 'Package audit'
+      script: npm audit
+    - name: 'Tests'
+      script: npm test
