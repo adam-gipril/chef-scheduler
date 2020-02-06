@@ -4,17 +4,18 @@ import { Event } from '@/models';
 
 /** Interface for Google's Calendar API */
 export default class GoogleCalendarService {
+  /** APIs for Google Calendar */
+  private static readonly chefSchedule = google.calendar('v3');
+
   /** Provides service account authentication for Google Calendar */
   private static readonly googleAuthInstance = new google.auth.GoogleAuth({
     credentials: JSON.parse(process.env.CREDENTIALS),
     scopes: ['https://www.googleapis.com/auth/calendar'],
   });
 
-  /** Events API for Google Calendar */
-  private static readonly calendarEvents = google.calendar('v3').events;
-
   /** Obtain a JWT to authenticate Google Calendar requests */
   private static getJWT() {
+    // TODO reuse token and refresh only as needed
     return this.googleAuthInstance.getClient() as Promise<JWT>;
   }
 
@@ -27,11 +28,7 @@ export default class GoogleCalendarService {
   static async addEvents(events: Event[], calendarId = 'primary') {
     const auth = await this.getJWT();
     const requests = events.map(event =>
-      this.calendarEvents.insert({
-        auth,
-        calendarId,
-        requestBody: event,
-      }),
+      this.chefSchedule.events.insert({ auth, calendarId, requestBody: event }),
     );
     await Promise.all(requests);
   }
