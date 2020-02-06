@@ -1,7 +1,7 @@
 import 'module-alias/register';
 import app from '@/app';
 
-const port = process.env.PORT ?? '4003';
+const port = process.env.PORT || '4003';
 // eslint-disable-next-line no-console
 const server = app.listen(port, () => console.log(`listening on ${port}`));
 
