@@ -10,6 +10,27 @@ const scheduleItem: ScheduleItem = {
 
 describe('model: ChefSchedule', () => {
   describe('methods', () => {
+    describe('static generateRandom', () => {
+      const schedule = ChefSchedule.generateRandom();
+
+      it('returns a Schedule instance', () => {
+        expect(schedule).toBeInstanceOf(ChefSchedule);
+      });
+
+      it('schedules an event for each of Sunday–Thursday', () => {
+        schedule.events.forEach((event, i) => {
+          const day = +moment(event.start.date, 'YYYY-MM-DD').format('d');
+          expect(day).toBe(i);
+        });
+      });
+
+      it('assigns each chef at most one event', () => {
+        const chefs = new Set();
+        schedule.events.forEach(event => chefs.add(event.summary));
+        expect(chefs.size).toBe(schedule.events.length);
+      });
+    });
+
     describe('static fromScheduleItems', () => {
       const date = moment()
         .day(0)
