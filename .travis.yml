@@ -12,5 +12,7 @@ jobs:
   include:
     - name: 'Package audit'
       script: npm audit
-    - name: 'Tests'
+    - name: 'Lint'
+      script: npm run lint
+    - name: 'Test'
       script: npm test
