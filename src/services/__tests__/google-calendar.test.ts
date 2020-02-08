@@ -88,7 +88,7 @@ describe('service: GoogleCalendarService', () => {
       });
     });
 
-    describe('static queryChefsAvailabilityNextWeek', () => {
+    describe('static queryAndSetChefsAvailabilityNextWeek', () => {
       const chefs = [
         new Chef({ name: 'Hank', email: '', phone: '', calendarId: 'hank-calendar' }),
         new Chef({ name: 'Mary', email: '', phone: '', calendarId: 'mary-calendar' }),
@@ -97,7 +97,7 @@ describe('service: GoogleCalendarService', () => {
       const chefsAvailabilitySpies = chefs.map(chef => jest.spyOn(chef, 'setAvailabilityNextWeek'));
 
       beforeEach(async () => {
-        await GoogleCalendarService.queryChefsAvailabilityNextWeek(chefs);
+        await GoogleCalendarService.queryAndSetChefsAvailabilityNextWeek(chefs);
       });
 
       it('calls on GCal freebusy query only once', () => {

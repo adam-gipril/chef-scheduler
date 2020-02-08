@@ -40,7 +40,7 @@ export default class GoogleCalendarService {
    *
    * @param chefs array of chefs for which availability will be queried and set
    */
-  static async queryChefsAvailabilityNextWeek(chefs: Chef[]) {
+  static async queryAndSetChefsAvailabilityNextWeek(chefs: Chef[]) {
     const nextWeekSunday = 6;
     const nextWeekSaturday = 12;
     const auth = await this.getJWT();
