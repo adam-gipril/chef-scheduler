@@ -3,9 +3,7 @@ import { TwilioService } from '..';
 
 jest.mock('twilio', () => {
   const mockCreate = jest.fn();
-  return () => ({
-    messages: { create: mockCreate },
-  });
+  return () => ({ messages: { create: mockCreate } });
 });
 
 const mockCreate = createClient().messages.create as jest.Mock;
