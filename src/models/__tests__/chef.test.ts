@@ -1,3 +1,5 @@
+import { calendar_v3 as calendarV3 } from 'googleapis/build/src/apis/calendar/v3';
+import moment from 'moment';
 import { Person } from '@/interfaces';
 import { Chef } from '..';
 
@@ -15,6 +17,40 @@ describe('model: Chef', () => {
     it('assigns properties from the passed-in Person', () => {
       Object.keys(person).forEach(key => {
         expect(person[key]).toBe(chef[key]);
+      });
+    });
+  });
+
+  describe('methods', () => {
+    describe('setAvailabilityNextWeek', () => {
+      const busyPeriods: calendarV3.Schema$TimePeriod[] = [
+        {
+          start: moment()
+            .day(8)
+            .format(),
+          end: moment()
+            .day(8)
+            .format(),
+        },
+        {
+          start: moment()
+            .day(10)
+            .format(),
+          end: moment()
+            .day(12)
+            .format(),
+        },
+      ];
+
+      it('sets availability of each busy day to "false"', () => {
+        Object.keys(chef.availabilityNextWeek).forEach(day => {
+          expect(chef.availabilityNextWeek[day]).toBe(true);
+        });
+
+        chef.setAvailabilityNextWeek(busyPeriods);
+        Object.keys(chef.availabilityNextWeek).forEach(day => {
+          expect(chef.availabilityNextWeek[day]).toBe(![8, 10, 11, 12].includes(+day));
+        });
       });
     });
   });

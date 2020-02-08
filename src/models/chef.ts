@@ -35,6 +35,7 @@ export default class Chef implements Person {
     busyPeriods.forEach(({ start, end }) => {
       const startDay = moment(start).day() + 7;
       const endDay = moment(end).day() + 7;
+      // for each busy day between start & end, set day as busy
       Array.from(Array(endDay - startDay + 1), (_, i) => startDay + i).forEach(day => {
         this.availabilityNextWeek[day] = false;
       });

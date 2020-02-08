@@ -24,6 +24,7 @@ describe('model: ChefSchedule', () => {
         });
       });
 
+      // TODO handle cases when there are fewer chefs than days to assign
       it('assigns each chef at most one event', () => {
         const chefs = new Set();
         schedule.events.forEach(event => chefs.add(event.summary));
