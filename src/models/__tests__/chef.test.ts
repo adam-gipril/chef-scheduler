@@ -1,6 +1,7 @@
+import { calendar_v3 as calendarV3 } from 'googleapis/build/src/apis/calendar/v3';
 import moment from 'moment';
 import { Person } from '@/interfaces';
-import { Chef, Event } from '..';
+import { Chef } from '..';
 
 const person: Person = {
   name: 'Hank',
@@ -9,18 +10,7 @@ const person: Person = {
   calendarId: 'my-calendar',
 };
 
-const exclusions = [
-  new Event({
-    summary: 'my Monday event',
-    start: moment().day(8),
-  }),
-  new Event({
-    summary: 'my Tuesday event',
-    start: moment().day(9),
-  }),
-];
-
-const chef = new Chef(person, exclusions);
+const chef = new Chef(person);
 
 describe('model: Chef', () => {
   describe('constructor', () => {
@@ -31,10 +21,36 @@ describe('model: Chef', () => {
     });
   });
 
-  describe('getters', () => {
-    describe('excludedDaysNextWeek', () => {
-      it('returns days of exclusions next week', () => {
-        expect(chef.excludedDaysNextWeek).toStrictEqual([8, 9]);
+  describe('methods', () => {
+    describe('setAvailabilityNextWeek', () => {
+      const busyPeriods: calendarV3.Schema$TimePeriod[] = [
+        {
+          start: moment()
+            .day(8)
+            .format(),
+          end: moment()
+            .day(8)
+            .format(),
+        },
+        {
+          start: moment()
+            .day(10)
+            .format(),
+          end: moment()
+            .day(12)
+            .format(),
+        },
+      ];
+
+      it('sets availability of each busy day to "false"', () => {
+        Object.keys(chef.availabilityNextWeek).forEach(day => {
+          expect(chef.availabilityNextWeek[day]).toBe(true);
+        });
+
+        chef.setAvailabilityNextWeek(busyPeriods);
+        Object.keys(chef.availabilityNextWeek).forEach(day => {
+          expect(chef.availabilityNextWeek[day]).toBe(![8, 10, 11, 12].includes(+day));
+        });
       });
     });
   });
