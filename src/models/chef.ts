@@ -18,8 +18,18 @@ export default class Chef implements Person {
     12: true, // Friday
     13: true, // Saturday
   };
-
-  score?: number; // TODO score will depend on cooking history
+  /** Score representing how frequently Chef has cooked */
+  // TODO implement cookFrequency
+  cookFrequency?: number;
+  /** Score representing how available Chef is to cook next week */
+  get availabilityScore() {
+    return (
+      Object.keys(this.availabilityNextWeek).reduce(
+        (score, day) => (this.availabilityNextWeek[day] ? score : score + 1),
+        0,
+      ) / 7
+    );
+  }
 
   constructor(person: Person) {
     Object.assign(this, person);
