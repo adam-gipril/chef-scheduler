@@ -25,7 +25,7 @@ export default class Chef implements Person {
   get availabilityScore() {
     return (
       Object.keys(this.availabilityNextWeek).reduce(
-        (score, day) => (this.availabilityNextWeek[day] ? score : score + 1),
+        (score, day) => (this.availabilityNextWeek[day] ? score + 1 : score),
         0,
       ) / 7
     );
