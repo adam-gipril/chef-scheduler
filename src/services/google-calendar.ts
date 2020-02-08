@@ -1,6 +1,7 @@
-import { google } from 'googleapis';
+import moment from 'moment';
 import { JWT } from 'google-auth-library';
-import { Event } from '@/models';
+import { google } from 'googleapis';
+import { Chef, Event } from '@/models';
 
 /** Interface for Google's Calendar API */
 export default class GoogleCalendarService {
@@ -31,5 +32,35 @@ export default class GoogleCalendarService {
       this.chefSchedule.events.insert({ auth, calendarId, requestBody: event }),
     );
     await Promise.all(requests);
+  }
+
+  /**
+   * Query chefs' availability from their personal "Chef Schedule" Google calendar,
+   * and use `Chef.prototype.setAvailabilityNextWeek` to set each chef's availability
+   *
+   * @param chefs array of chefs for which availability will be queried and set
+   */
+  static async queryChefsAvailabilityNextWeek(chefs: Chef[]) {
+    const nextWeekSunday = 6;
+    const nextWeekSaturday = 12;
+    const auth = await this.getJWT();
+    try {
+      const response = await this.chefSchedule.freebusy.query({
+        auth,
+        requestBody: {
+          items: chefs.map(chef => ({ id: chef.calendarId })),
+          timeMax: moment()
+            .day(nextWeekSaturday)
+            .format(),
+          timeMin: moment()
+            .day(nextWeekSunday)
+            .format(),
+          timeZone: 'America/Phoenix',
+        },
+      });
+      chefs.forEach(chef =>
+        chef.setAvailabilityNextWeek(response.data.calendars[chef.calendarId]?.busy),
+      );
+    } catch (error) {} // TODO error handling
   }
 }
