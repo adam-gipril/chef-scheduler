@@ -1,6 +1,6 @@
 {
   "env": { "node": true },
-  "extends": ["airbnb-base", "plugin:jest/all"],
+  "extends": ["airbnb-base", "plugin:jest/all", "prettier"],
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "settings": {
@@ -16,18 +16,15 @@
     "@typescript-eslint/no-useless-constructor": "error",
     "arrow-parens": ["error", "as-needed"],
     "comma-dangle": ["error", "always-multiline"],
-    "function-paren-newline": "off",
-    "implicit-arrow-linebreak": "off",
     "import/extensions": "off",
     "import/prefer-default-export": "off",
     "jest/no-hooks": "off",
     "jest/prefer-expect-assertions": "off",
-    "lines-between-class-members": "off",
+    "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
     "no-empty": "off",
     "no-empty-function": "off",
     "no-plusplus": "off",
     "no-return-await": "off",
-    "no-underscore-dangle": "off",
     "no-unused-vars": "off",
     "no-useless-constructor": "off",
     "object-curly-newline": ["error", { "multiline": true }]

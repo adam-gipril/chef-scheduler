@@ -18,6 +18,7 @@ export default class Chef implements Person {
     12: true, // Friday
     13: true, // Saturday
   };
+
   /** Score representing how frequently Chef has cooked */
   // TODO implement cookFrequency
   cookFrequency?: number;

@@ -12,7 +12,7 @@
   "scripts": {
     "docs": "rm -rf docs && jsdoc -c jsdoc.json -d docs -r && open docs/index.html",
     "lint": "eslint src --ext ts",
-    "format": "prettier --write \"**/*@(.ts|.js|.md)\"",
+    "format": "prettier --write \"**/*@(.ts|.js|.md)\" && npm run lint -- --fix",
     "build": "rm -rf dist && webpack",
     "build:watch": "npm run build -- -w",
     "start": "node dist",
@@ -43,6 +43,7 @@
     "circular-dependency-plugin": "^5.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.10.0",
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-jest": "^22.21.0",
