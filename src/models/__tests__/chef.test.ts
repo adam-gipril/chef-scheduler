@@ -3,6 +3,9 @@ import moment from 'moment';
 import { Person } from '@/interfaces';
 import { Chef } from '..';
 
+// FIXME correctly sandbox so this doesn't need to be mocked
+jest.mock('twilio');
+
 const person: Person = {
   name: 'Hank',
   email: 'hank@hill.com',

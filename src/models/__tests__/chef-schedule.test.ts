@@ -3,6 +3,8 @@ import { Person, ScheduleItem } from '@/interfaces';
 import { GoogleCalendarService } from '@/services';
 import { ChefSchedule, Chef } from '..';
 
+// FIXME correctly sandbox so this doesn't need to be mocked
+jest.mock('twilio');
 jest
   .spyOn(GoogleCalendarService, 'queryAndSetChefsAvailabilityNextWeek')
   .mockImplementation(async (chefs: Chef[]) => {
