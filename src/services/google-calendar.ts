@@ -1,6 +1,6 @@
-import moment from 'moment';
 import { JWT } from 'google-auth-library';
 import { google } from 'googleapis';
+import moment from 'moment';
 import { Chef, Event } from '@/models';
 
 /** Interface for Google's Calendar API */
