@@ -8,7 +8,9 @@ import Schedule, { days } from './schedule';
 
 export default class ChefSchedule extends Schedule {
   private static numDaysToAssign = 5; // Sunday–Thursday
-  private static people = JSON.parse(process.env.PEOPLE || '[]') as Person[];
+  private static get people() {
+    return JSON.parse(process.env.PEOPLE || '[]') as Person[];
+  }
 
   static summary(chef: string | Chef, mealType = 'Main') {
     return `${capitalize(mealType)} — ${capitalize(chef instanceof Chef ? chef.name : chef)}`;
