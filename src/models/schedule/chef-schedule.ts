@@ -19,8 +19,8 @@ export default class ChefSchedule extends Schedule {
   /** Construct a ChefSchedule, taking chefs' availability into account */
   // TODO handle repeat cooking days when # chefs fewer than # days to cook
   static async generate() {
-    const chefs = this.people.map(person => new Chef(person));
     const daysToAssign = Array.from(Array(this.numDaysToAssign), (_, i) => i + 7);
+    const chefs = this.people.map(person => new Chef(person));
     await GoogleCalendarService.queryAndSetChefsAvailabilityNextWeek(chefs);
     const selectedChefs = Array.from(daysToAssign, () => {
       let chef: Chef;
