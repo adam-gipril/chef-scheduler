@@ -1,6 +1,9 @@
 import moment from 'moment';
 import { Event, EventDateTime } from '..';
 
+// FIXME correctly sandbox so this doesn't need to be mocked
+jest.mock('twilio');
+
 describe('model: Event', () => {
   const summary = 'my event';
   const start = moment();
