@@ -33,8 +33,8 @@ const scheduleItem: ScheduleItem = {
 describe('model: ChefSchedule', () => {
   describe('methods', () => {
     describe('static generate', () => {
-      let schedule: ChefSchedule;
       let PEOPLE: string;
+      let schedule: ChefSchedule;
 
       beforeAll(async () => {
         PEOPLE = process.env.PEOPLE;
