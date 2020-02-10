@@ -30,7 +30,7 @@ if (process.env.NODE_ENV === 'production') {
       await GoogleCalendarService.addEvents(events);
       await TwilioService.sendGroupSMS({
         body:
-          'A new Chef Schedule is available! Visit https://bit.ly/37bMa48 to see if/when you cook next week!',
+          'A new Chef Schedule is available! Visit https://bit.ly/37bMa48 to see if/when you cook next week.',
         toGroup: people.map(person => person.phone),
       });
     } catch (error) {}
