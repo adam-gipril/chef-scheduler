@@ -5,8 +5,9 @@ import { GoogleCalendarService } from '..';
 
 jest.mock('twilio');
 jest.mock('googleapis', () => {
-  const mockInsert = jest.fn();
-  const mockQuery = jest.fn().mockResolvedValue({
+  const mockAclInsert = jest.fn();
+  const mockEventsInsert = jest.fn();
+  const mockFreeBusyQuery = jest.fn().mockResolvedValue({
     data: {
       calendars: {
         'hank-calendar': { busy: [] },
@@ -21,20 +22,31 @@ jest.mock('googleapis', () => {
           getClient = () => ({ email: 'my service email' });
         },
       },
-      calendar: () => ({ events: { insert: mockInsert }, freebusy: { query: mockQuery } }),
+      calendar: () => ({
+        acl: { insert: mockAclInsert },
+        events: { insert: mockEventsInsert },
+        freebusy: { query: mockFreeBusyQuery },
+      }),
     },
   };
 });
 
-const mockInsert = google.calendar('v3').events.insert as jest.Mock;
-interface MockInsertArg {
+const mockAclInsert = google.calendar('v3').acl.insert as jest.Mock;
+interface MockAclInsertArg {
+  auth: { email: string };
+  calendarId: string;
+  requestBody: { role: 'writer'; scope: { type: 'user'; value: string } };
+}
+
+const mockEventsInsert = google.calendar('v3').events.insert as jest.Mock;
+interface MockEventsInsertArg {
   auth: { email: string };
   calendarId: string;
   requestBody: Event;
 }
 
-const mockQuery = google.calendar('v3').freebusy.query as jest.Mock;
-interface MockQueryArg {
+const mockFreebusyQuery = google.calendar('v3').freebusy.query as jest.Mock;
+interface MockFreebusyQueryArg {
   auth: { email: string };
   requestBody: {
     items: { id: string }[];
@@ -46,6 +58,38 @@ interface MockQueryArg {
 
 describe('service: GoogleCalendarService', () => {
   describe('methods', () => {
+    describe('static addWriteAccessUserToCalendar', () => {
+      const calendarId = 'my-calendar';
+      const email = '1337@gamer.com';
+
+      beforeEach(async () => {
+        await GoogleCalendarService.addWriteAccessUserToCalendar({ calendarId, email });
+      });
+
+      it('calls on GCal acl insert with JWT obtained from GoogleAuth instance', () => {
+        mockAclInsert.mock.calls.forEach((call: [MockAclInsertArg]) => {
+          expect(call).toHaveLength(1);
+          expect(call[0].auth).toStrictEqual({ email: 'my service email' });
+        });
+      });
+
+      it('calls on GCal acl insert with passed-in calendarId and email', () => {
+        mockAclInsert.mock.calls.forEach((call: [MockAclInsertArg]) => {
+          expect(call).toHaveLength(1);
+          expect(call[0].calendarId).toBe(calendarId);
+          expect(call[0].requestBody.scope.value).toBe(email);
+        });
+      });
+
+      it('calls on GCal acl insert with role="writer" & scope.type="user"', () => {
+        mockAclInsert.mock.calls.forEach((call: [MockAclInsertArg]) => {
+          expect(call).toHaveLength(1);
+          expect(call[0].requestBody.role).toBe('writer');
+          expect(call[0].requestBody.scope.type).toBe('user');
+        });
+      });
+    });
+
     describe('static addEvents', () => {
       const events = [
         new Event({ summary: 'my event', start: moment() }),
@@ -57,31 +101,31 @@ describe('service: GoogleCalendarService', () => {
       });
 
       it('calls on GCal events insert with JWT obtained from GoogleAuth instance', () => {
-        mockInsert.mock.calls.forEach((call: [MockInsertArg]) => {
+        mockEventsInsert.mock.calls.forEach((call: [MockEventsInsertArg]) => {
           expect(call).toHaveLength(1);
           expect(call[0].auth).toStrictEqual({ email: 'my service email' });
         });
       });
 
       it('calls on GCal events insert with default calendarId = "primary"', () => {
-        mockInsert.mock.calls.forEach((call: [MockInsertArg]) => {
+        mockEventsInsert.mock.calls.forEach((call: [MockEventsInsertArg]) => {
           expect(call).toHaveLength(1);
           expect(call[0].calendarId).toBe('primary');
         });
       });
 
       it('calls on GCal events insert with passed-in calendarId', async () => {
-        mockInsert.mockClear();
+        mockEventsInsert.mockClear();
         await GoogleCalendarService.addEvents(events, 'secondary');
-        mockInsert.mock.calls.forEach((call: [MockInsertArg]) => {
+        mockEventsInsert.mock.calls.forEach((call: [MockEventsInsertArg]) => {
           expect(call).toHaveLength(1);
           expect(call[0].calendarId).toBe('secondary');
         });
       });
 
       it('calls on GCal events insert only once for each passed-in event', () => {
-        expect(mockInsert).toHaveBeenCalledTimes(events.length);
-        mockInsert.mock.calls.forEach((call: [MockInsertArg], i: number) => {
+        expect(mockEventsInsert).toHaveBeenCalledTimes(events.length);
+        mockEventsInsert.mock.calls.forEach((call: [MockEventsInsertArg], i: number) => {
           expect(call).toHaveLength(1);
           expect(call[0].requestBody).toBe(events[i]);
         });
@@ -101,11 +145,11 @@ describe('service: GoogleCalendarService', () => {
       });
 
       it('calls on GCal freebusy query only once', () => {
-        expect(mockQuery).toHaveBeenCalledTimes(1);
+        expect(mockFreebusyQuery).toHaveBeenCalledTimes(1);
       });
 
       it('calls on GCal freebusy query with JWT obtained from GoogleAuth instance', () => {
-        mockQuery.mock.calls.forEach((call: [MockQueryArg]) => {
+        mockFreebusyQuery.mock.calls.forEach((call: [MockFreebusyQueryArg]) => {
           expect(call).toHaveLength(1);
           expect(call[0].auth).toStrictEqual({ email: 'my service email' });
         });

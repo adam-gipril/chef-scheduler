@@ -3,6 +3,11 @@ import { google } from 'googleapis';
 import moment from 'moment';
 import { Chef, Event } from '@/models';
 
+interface WriteAccessArg {
+  calendarId: string;
+  email: string;
+}
+
 /** Interface for Google's Calendar API */
 export default class GoogleCalendarService {
   /** APIs for Google Calendar */
@@ -18,6 +23,21 @@ export default class GoogleCalendarService {
   private static getJWT() {
     // TODO reuse token and refresh only as needed
     return this.googleAuthInstance.getClient() as Promise<JWT>;
+  }
+
+  /**
+   * Add a "writer" access control rule to the Google Calendar specified by passed-in
+   * calendarId, for user with passed-in email
+   *
+   * @param {WriteAccessArg} user object containing `calendarId` and user's `email`
+   */
+  static async addWriteAccessUserToCalendar({ calendarId, email }: WriteAccessArg) {
+    const auth = await this.getJWT();
+    await this.chefSchedule.acl.insert({
+      auth,
+      calendarId,
+      requestBody: { role: 'writer', scope: { type: 'user', value: email } },
+    });
   }
 
   /**
