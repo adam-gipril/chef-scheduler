@@ -23,6 +23,7 @@ export default class Chef implements Person {
   // TODO implement cookFrequency
   cookFrequency?: number;
   /** Score representing how available Chef is to cook next week */
+  // TODO exclude days not cooked in score (Friday, Saturday)
   get availabilityScore() {
     return (
       Object.keys(this.availabilityNextWeek).reduce(
