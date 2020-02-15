@@ -7,14 +7,9 @@ jest.mock('twilio');
 jest.mock('googleapis', () => {
   const mockAclInsert = jest.fn();
   const mockEventsInsert = jest.fn();
-  const mockFreeBusyQuery = jest.fn().mockResolvedValue({
-    data: {
-      calendars: {
-        'hank-calendar': { busy: [] },
-        'mary-calendar': { busy: [] },
-      },
-    },
-  });
+  const mockFreeBusyQuery = jest
+    .fn()
+    .mockResolvedValue({ data: { calendars: { 'hank-calendar': { busy: [] } } } });
   return {
     google: {
       auth: {
@@ -133,15 +128,14 @@ describe('service: GoogleCalendarService', () => {
     });
 
     describe('static queryAndSetChefsAvailabilityNextWeek', () => {
-      const chefs = [
-        new Chef({ name: 'Hank', email: '', phone: '', calendarId: 'hank-calendar' }),
-        new Chef({ name: 'Mary', email: '', phone: '', calendarId: 'mary-calendar' }),
-      ];
+      const hank = new Chef({ name: 'Hank', email: '', phone: '', calendarId: 'hank-calendar' });
+      const mary = new Chef({ name: 'Mary', email: '', phone: '', calendarId: 'mary-calendar' });
 
-      const chefsAvailabilitySpies = chefs.map(chef => jest.spyOn(chef, 'setAvailabilityNextWeek'));
+      const spySetAvailabilityNextWeekHank = jest.spyOn(hank, 'setAvailabilityNextWeek');
+      const spySetAvailabilityNextWeekMary = jest.spyOn(mary, 'setAvailabilityNextWeek');
 
       beforeEach(async () => {
-        await GoogleCalendarService.queryAndSetChefsAvailabilityNextWeek(chefs);
+        await GoogleCalendarService.queryAndSetChefsAvailabilityNextWeek([hank, mary]);
       });
 
       it('calls on GCal freebusy query only once', () => {
@@ -156,10 +150,10 @@ describe('service: GoogleCalendarService', () => {
       });
 
       it('sets availability of each chef', () => {
-        chefsAvailabilitySpies.forEach(spy => {
-          expect(spy).toHaveBeenCalledTimes(1);
-          expect(spy).toHaveBeenCalledWith([]);
-        });
+        expect(spySetAvailabilityNextWeekHank).toHaveBeenCalledTimes(1);
+        expect(spySetAvailabilityNextWeekHank).toHaveBeenCalledWith([]);
+        expect(spySetAvailabilityNextWeekMary).toHaveBeenCalledTimes(1);
+        expect(spySetAvailabilityNextWeekMary).toHaveBeenCalledWith(undefined);
       });
     });
   });
