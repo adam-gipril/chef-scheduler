@@ -15,21 +15,22 @@ export default class Chef implements Person {
     9: true, //  Tuesday
     10: true, // Wednesday
     11: true, // Thursday
-    12: true, // Friday
-    13: true, // Saturday
+    // TODO programmatically exclude these days
+    // 12: true, // Friday
+    // 13: true, // Saturday
   };
 
   /** Score representing how frequently Chef has cooked */
   // TODO implement cookFrequency
   cookFrequency?: number;
   /** Score representing how available Chef is to cook next week */
-  // TODO exclude days not cooked in score (Friday, Saturday)
+  // TODO don't hardcode number of days per week to cook
   get availabilityScore() {
     return (
       Object.keys(this.availabilityNextWeek).reduce(
         (score, day) => (this.availabilityNextWeek[day] ? score + 1 : score),
         0,
-      ) / 7
+      ) / 5
     );
   }
 

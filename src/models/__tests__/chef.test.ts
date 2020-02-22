@@ -43,7 +43,7 @@ describe('model: Chef', () => {
       it('returns normalized sum of days chef is available to cook', () => {
         expect(chef.availabilityScore).toBe(1);
         chef.setAvailabilityNextWeek(busyPeriods);
-        expect(chef.availabilityScore).toBe(3 / 7);
+        expect(chef.availabilityScore).toBe(2 / 5);
       });
     });
   });
