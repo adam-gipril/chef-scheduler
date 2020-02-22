@@ -3,6 +3,8 @@ import { ChefSchedule } from '@/models';
 import { GoogleCalendarService, TwilioService } from '@/services';
 import * as Tasks from '..';
 
+jest.mock('twilio');
+
 const { main } = Tasks;
 const spyMain = jest.spyOn(Tasks, 'main');
 
