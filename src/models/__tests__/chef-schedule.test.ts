@@ -10,7 +10,7 @@ const spyQueryAndSetChefsAvailabilityNextWeek = jest
   .mockImplementation(async (chefs: Chef[]) => {
     chefs.forEach((chef, i) => {
       Object.keys(chef.availabilityNextWeek).forEach(day => {
-        // eslint-disable-next-line no-param-reassign
+        /* eslint-disable-next-line no-param-reassign */
         chef.availabilityNextWeek[day] = +day === i + 7;
       });
     });
