@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Person, ScheduleItem } from '@/interfaces';
+import { Person } from '@/interfaces';
 import { GoogleCalendarService } from '@/services';
 import { ChefSchedule, Chef } from '..';
 
@@ -23,12 +23,6 @@ const people: Person[] = [
   { name: 'Barry', email: '', phone: '', calendarId: '3' },
   { name: 'Cheri', email: '', phone: '', calendarId: '4' },
 ];
-
-const scheduleItem: ScheduleItem = {
-  type: 'Main',
-  chef: 'Lloyd',
-  day: 'Sun',
-};
 
 describe('model: ChefSchedule', () => {
   describe('methods', () => {
@@ -124,26 +118,6 @@ describe('model: ChefSchedule', () => {
         schedule = ChefSchedule.generateRandom();
         expect(schedule.events).toHaveLength(0);
         process.env.PEOPLE = PEOPLE;
-      });
-    });
-
-    describe('static fromScheduleItems', () => {
-      const date = moment()
-        .day(0)
-        .format('YYYY-MM-DD');
-      const schedule = ChefSchedule.fromScheduleItems([scheduleItem], date);
-
-      it('returns a ChefSchedule instance', () => {
-        expect(schedule).toBeInstanceOf(ChefSchedule);
-      });
-
-      it('sets the schedule', () => {
-        const [event] = schedule.events;
-        expect(schedule.events).toHaveLength(1);
-        expect(event.summary).toContain('Main');
-        expect(event.summary).toContain('Lloyd');
-        expect(event.start.date).toBe(date);
-        expect(event.end.date).toBe(date);
       });
     });
   });
