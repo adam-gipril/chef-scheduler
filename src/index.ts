@@ -1,2 +1,8 @@
-export { default as app } from './app';
-export { default as server } from './server';
+/* istanbul ignore file */
+import 'module-alias/register';
+import { schedule as createTask } from 'node-cron';
+import { main } from '@/tasks';
+
+if (process.env.NODE_ENV === 'production') {
+  createTask('* * * * Friday', main);
+}
