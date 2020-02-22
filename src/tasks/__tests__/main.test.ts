@@ -20,7 +20,10 @@ const spyTwilioServiceSendGroupSMS = jest
   .spyOn(TwilioService, 'sendGroupSMS')
   .mockResolvedValue([]);
 
-const people: Person[] = [{ name: 'Mary', email: '', phone: '15554201337', calendarId: '' }];
+const people: Person[] = [
+  { name: 'Mary', email: '', phone: '15554201337', calendarId: '' },
+  { name: 'Hank', email: '', phone: '15554206969', calendarId: '' },
+];
 
 describe('task: main', () => {
   let PEOPLE: string;
@@ -49,6 +52,9 @@ describe('task: main', () => {
 
   it('sends an SMS to the group indicating schedule is ready', () => {
     expect(spyTwilioServiceSendGroupSMS).toHaveBeenCalledTimes(1);
+    people.forEach(person => {
+      expect(spyTwilioServiceSendGroupSMS.mock.calls[0][0].toGroup).toContain(person.phone);
+    });
   });
 
   it('does not throw errors from any of the services', () => {
