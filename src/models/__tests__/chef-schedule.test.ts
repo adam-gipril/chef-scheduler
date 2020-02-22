@@ -5,7 +5,7 @@ import { ChefSchedule, Chef } from '..';
 
 // FIXME correctly sandbox so this doesn't need to be mocked
 jest.mock('twilio');
-jest
+const spyQueryAndSetChefsAvailabilityNextWeek = jest
   .spyOn(GoogleCalendarService, 'queryAndSetChefsAvailabilityNextWeek')
   .mockImplementation(async (chefs: Chef[]) => {
     chefs.forEach((chef, i) => {
@@ -32,8 +32,9 @@ const scheduleItem: ScheduleItem = {
 
 describe('model: ChefSchedule', () => {
   describe('methods', () => {
+    let PEOPLE: string;
+
     describe('static generate', () => {
-      let PEOPLE: string;
       let schedule: ChefSchedule;
 
       beforeAll(async () => {
@@ -77,10 +78,27 @@ describe('model: ChefSchedule', () => {
         );
         schedule.events.forEach((event, i) => expect(event.summary.includes(people[i].name)));
       });
+
+      it('does not schedule a chef with no availability', async () => {
+        spyQueryAndSetChefsAvailabilityNextWeek.mockImplementationOnce(async (chefs: Chef[]) => {
+          Object.keys(chefs[0].availabilityNextWeek).forEach(day => {
+            // eslint-disable-next-line no-param-reassign
+            chefs[0].availabilityNextWeek[day] = false;
+          });
+        });
+
+        schedule = await ChefSchedule.generate();
+
+        expect(schedule.events).toBeDefined();
+        expect(schedule.events).toHaveLength(people.length - 1);
+        schedule.events.forEach(event => {
+          expect(event.summary).not.toContain(people[0].name);
+        });
+      });
     });
 
     describe('static generateRandom', () => {
-      const schedule = ChefSchedule.generateRandom();
+      let schedule = ChefSchedule.generateRandom();
 
       it('returns a ChefSchedule instance', () => {
         expect(schedule).toBeInstanceOf(ChefSchedule);
@@ -98,6 +116,14 @@ describe('model: ChefSchedule', () => {
         const chefs = new Set();
         schedule.events.forEach(event => chefs.add(event.summary));
         expect(chefs.size).toBe(schedule.events.length);
+      });
+
+      it('does not crash when fewer chefs than days to assign exist', () => {
+        PEOPLE = process.env.PEOPLE;
+        process.env.PEOPLE = JSON.stringify(people.slice(0, 1));
+        schedule = ChefSchedule.generateRandom();
+        expect(schedule.events).toHaveLength(0);
+        process.env.PEOPLE = PEOPLE;
       });
     });
 

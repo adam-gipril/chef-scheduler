@@ -35,7 +35,7 @@ export default class ChefSchedule extends Schedule {
       }
 
       return chef;
-    });
+    }).filter(chef => !!chef);
 
     selectedChefs.sort((a, b) => a.availabilityScore - b.availabilityScore);
     return new ChefSchedule(
