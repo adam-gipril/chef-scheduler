@@ -9,7 +9,7 @@ import Schedule, { days } from './schedule';
 export default class ChefSchedule extends Schedule {
   private static numDaysToAssign = 5; // Sunday–Thursday
   private static get people() {
-    return JSON.parse(process.env.PEOPLE || '[]') as Person[];
+    return JSON.parse(process.env.PEOPLE) as Person[];
   }
 
   static summary(chef: string | Chef, mealType = 'Main') {
@@ -35,7 +35,7 @@ export default class ChefSchedule extends Schedule {
       }
 
       return chef;
-    });
+    }).filter(chef => !!chef);
 
     selectedChefs.sort((a, b) => a.availabilityScore - b.availabilityScore);
     return new ChefSchedule(
@@ -76,7 +76,7 @@ export default class ChefSchedule extends Schedule {
   /** Construct a ChefSchedule from data conforming to the chef-cal-integration external API */
   static fromScheduleItems(scheduleItems: ScheduleItem[], startDateString: string) {
     return new ChefSchedule(
-      scheduleItems.map(({ chef, day, type = 'Main' }) => {
+      scheduleItems.map(({ chef, day, type }) => {
         const summary = this.summary(chef, type);
         const start = moment(startDateString, 'YYYY-MM-DD');
         start.add(days[day.toUpperCase()], 'days');

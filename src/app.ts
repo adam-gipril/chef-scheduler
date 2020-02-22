@@ -1,7 +1,8 @@
 import express from 'express';
-import { ScheduleRequestBody } from '@/interfaces';
+import { schedule as createTask } from 'node-cron';
+import { Person, ScheduleRequestBody } from '@/interfaces';
 import { ChefSchedule } from '@/models';
-import { GoogleCalendarService } from '@/services';
+import { GoogleCalendarService, TwilioService } from '@/services';
 
 const app = express();
 
@@ -20,5 +21,20 @@ app.post('/schedule', async ({ body }, res) => {
     res.sendStatus(400);
   }
 });
+
+if (process.env.NODE_ENV === 'production') {
+  createTask('* * * * Friday', async () => {
+    try {
+      const people = JSON.parse(process.env.PEOPLE) as Person[];
+      const { events } = await ChefSchedule.generate();
+      await GoogleCalendarService.addEvents(events);
+      await TwilioService.sendGroupSMS({
+        body:
+          'A new Chef Schedule is available! Visit https://bit.ly/37bMa48 to see if/when you cook next week.',
+        toGroup: people.map(person => person.phone),
+      });
+    } catch (error) {}
+  });
+}
 
 export default app;

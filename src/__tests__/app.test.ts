@@ -17,7 +17,7 @@ const requestBody = {
   schedule: scheduleItems,
 };
 
-describe('express server', () => {
+describe('express app', () => {
   afterAll(() => server.close());
 
   describe('endpoints', () => {
