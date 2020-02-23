@@ -1,7 +1,7 @@
 {
   "name": "chef-scheduler",
   "version": "1.0.0",
-  "description": "Google-Calendar-based share cooking scheduler",
+  "description": "Tool for managing a shared cooking schedule amongst a community of friends",
   "license": "ISC",
   "author": "Adam Gipril <adam.gipril@icloud.com>",
   "repository": {
