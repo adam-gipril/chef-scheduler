@@ -1,0 +1,11 @@
+.vscode
+assets
+**/__tests__/*
+.editorconfig
+.eslint*
+.prettier*
+.travis.yml
+jest.config.js
+jsdoc.json
+nodemon.json
+README.md
