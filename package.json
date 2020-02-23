@@ -15,7 +15,7 @@
     "build": "rm -rf dist && webpack",
     "build:watch": "npm run build -- -w",
     "start": "node dist",
-    "start:watch": "nodemon src/server.ts",
+    "start:watch": "nodemon src",
     "test": "jest",
     "test:watch": "npm test -- --watch",
     "test:coverage": "npm test -- --coverage && open coverage/lcov-report/index.html"
