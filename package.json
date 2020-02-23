@@ -10,13 +10,12 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "docs": "rm -rf docs && jsdoc -c jsdoc.json -d docs -r && open docs/index.html",
     "lint": "eslint src --ext ts",
     "format": "prettier --write \"**/*@(.ts|.js|.md)\" && npm run lint -- --fix",
     "build": "rm -rf dist && webpack",
     "build:watch": "npm run build -- -w",
     "start": "node dist",
-    "start:watch": "nodemon src/server.ts",
+    "start:watch": "nodemon src",
     "test": "jest",
     "test:watch": "npm test -- --watch",
     "test:coverage": "npm test -- --coverage && open coverage/lcov-report/index.html"
@@ -51,7 +50,6 @@
     "eslint-plugin-jest": "^22.21.0",
     "husky": "^4.2.0",
     "jest": "^24.9.0",
-    "jsdoc": "^3.6.3",
     "lint-staged": "^10.0.2",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
