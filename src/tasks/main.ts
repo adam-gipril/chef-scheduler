@@ -17,5 +17,8 @@ export default async () => {
         'A new Chef Schedule is available! Visit https://bit.ly/37bMa48 to see if/when you cook next week.',
       toGroup: people.map(person => person.phone),
     });
-  } catch (error) {}
+  } catch (error) {
+    /* eslint-disable-next-line */
+    console.error(error);
+  }
 };
