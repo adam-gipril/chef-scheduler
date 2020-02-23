@@ -126,13 +126,6 @@ Each function, method, class, and interface definition is documented using
 [JSDoc](https://devdocs.io/jsdoc/) syntax. Many IDEs are capable of generating hover-over
 documentation on-the-fly from JSDoc syntax.
 
-To compile a navigable documentation resource and open it in your default browser, be sure to first
-[compile the project](#compiling) then run:
-
-```bash
-npm run docs
-```
-
 ## Deploying
 
 This application is deployed on [Heroku](https://www.heroku.com/). A webhook is in place to
