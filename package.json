@@ -1,12 +1,12 @@
 {
-  "name": "chef-cal-integration",
+  "name": "chef-scheduler",
   "version": "1.0.0",
-  "description": "Google Calendar Integration for chef scheduler",
+  "description": "Google-Calendar-based share cooking scheduler",
   "license": "ISC",
   "author": "Adam Gipril <adam.gipril@icloud.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bikeshaman/chef-cal-integration.git"
+    "url": "https://github.com/bikeshaman/chef-scheduler.git"
   },
   "main": "dist/index.js",
   "scripts": {
