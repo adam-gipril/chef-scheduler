@@ -3,6 +3,7 @@ import 'module-alias/register';
 import moment from 'moment';
 import { schedule as createTask } from 'node-cron';
 import { main } from '@/tasks';
+import './app';
 
 if (process.env.NODE_ENV === 'production') {
   /* eslint-disable-next-line */
