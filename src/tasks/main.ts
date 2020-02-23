@@ -2,6 +2,11 @@ import { Person } from '@/interfaces';
 import { ChefSchedule } from '@/models';
 import { GoogleCalendarService, TwilioService } from '@/services';
 
+/**
+ * Generate a chef schedule, add its events to Google
+ * Calendar, and notify the group via SMS that the new schedule
+ * is available
+ */
 export default async () => {
   try {
     const people = JSON.parse(process.env.PEOPLE) as Person[];
