@@ -12,6 +12,12 @@ export default class ChefSchedule extends Schedule {
     return JSON.parse(process.env.PEOPLE) as Person[];
   }
 
+  /**
+   * Standardized summary for a chef schedule event
+   *
+   * @param {string | Chef} chef individual who will cook the meal represented by the event
+   * @param { string } mealType (optional) type of meal the chef will cook ("Main" by default)
+   */
   static summary(chef: string | Chef, mealType = 'Main') {
     return `${capitalize(mealType)} — ${capitalize(chef instanceof Chef ? chef.name : chef)}`;
   }

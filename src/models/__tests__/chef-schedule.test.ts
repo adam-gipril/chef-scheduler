@@ -28,6 +28,31 @@ describe('model: ChefSchedule', () => {
   describe('methods', () => {
     let PEOPLE: string;
 
+    describe('static summary', () => {
+      const name = 'Dave';
+
+      it('returns a summary for an event when passed a Chef instance', () => {
+        const chef = new Chef(people[0]);
+        const summary = ChefSchedule.summary(chef);
+        expect(summary).toContain(chef.name);
+      });
+
+      it('returns a summary for an event when passed a chef name as a string', () => {
+        const summary = ChefSchedule.summary(name);
+        expect(summary).toContain(name);
+      });
+
+      it('assigns "Main" as the default meal type', () => {
+        const summary = ChefSchedule.summary(name);
+        expect(summary).toContain('Main');
+      });
+
+      it('assigns a passed-in meal type', () => {
+        const summary = ChefSchedule.summary(name, 'Side');
+        expect(summary).toContain('Side');
+      });
+    });
+
     describe('static generate', () => {
       let schedule: ChefSchedule;
 
