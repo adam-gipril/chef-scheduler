@@ -31,8 +31,8 @@ notified via SMS.
 ### Cloning the project and installing dependencies
 
 ```bash
-git clone https://github.com/bikeshaman/chef-cal-integration.git
-cd chef-cal-integration
+git clone https://github.com/bikeshaman/chef-scheduler.git
+cd chef-scheduler
 nvm install
 npm install
 ```
