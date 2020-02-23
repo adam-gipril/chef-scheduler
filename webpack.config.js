@@ -6,13 +6,19 @@ module.exports = {
   target: 'node',
   mode: 'production',
   devtool: 'inline-source-map',
-  entry: path.resolve(__dirname, 'src', 'server.ts'),
+  entry: path.resolve(__dirname, 'src', 'index.ts'),
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
-    rules: [{ test: /\.ts$/, use: ['babel-loader', 'ts-loader'], exclude: /node_modules/ }],
+    rules: [
+      {
+        test: /\.ts$/,
+        use: ['babel-loader', 'ts-loader'],
+        exclude: /node_modules/,
+      },
+    ],
   },
   resolve: {
     extensions: ['.ts', '.js'],
