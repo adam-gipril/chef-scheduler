@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Person, ScheduleItem } from '@/interfaces';
+import { Person } from '@/interfaces';
 import { GoogleCalendarService } from '@/services';
 import { ChefSchedule, Chef } from '..';
 
@@ -24,15 +24,34 @@ const people: Person[] = [
   { name: 'Cheri', email: '', phone: '', calendarId: '4' },
 ];
 
-const scheduleItem: ScheduleItem = {
-  type: 'Main',
-  chef: 'Lloyd',
-  day: 'Sun',
-};
-
 describe('model: ChefSchedule', () => {
   describe('methods', () => {
     let PEOPLE: string;
+
+    describe('static summary', () => {
+      const name = 'Dave';
+
+      it('returns a summary for an event when passed a Chef instance', () => {
+        const chef = new Chef(people[0]);
+        const summary = ChefSchedule.summary(chef);
+        expect(summary).toContain(chef.name);
+      });
+
+      it('returns a summary for an event when passed a chef name as a string', () => {
+        const summary = ChefSchedule.summary(name);
+        expect(summary).toContain(name);
+      });
+
+      it('assigns "Main" as the default meal type', () => {
+        const summary = ChefSchedule.summary(name);
+        expect(summary).toContain('Main');
+      });
+
+      it('assigns a passed-in meal type', () => {
+        const summary = ChefSchedule.summary(name, 'Side');
+        expect(summary).toContain('Side');
+      });
+    });
 
     describe('static generate', () => {
       let schedule: ChefSchedule;
@@ -124,26 +143,6 @@ describe('model: ChefSchedule', () => {
         schedule = ChefSchedule.generateRandom();
         expect(schedule.events).toHaveLength(0);
         process.env.PEOPLE = PEOPLE;
-      });
-    });
-
-    describe('static fromScheduleItems', () => {
-      const date = moment()
-        .day(0)
-        .format('YYYY-MM-DD');
-      const schedule = ChefSchedule.fromScheduleItems([scheduleItem], date);
-
-      it('returns a ChefSchedule instance', () => {
-        expect(schedule).toBeInstanceOf(ChefSchedule);
-      });
-
-      it('sets the schedule', () => {
-        const [event] = schedule.events;
-        expect(schedule.events).toHaveLength(1);
-        expect(event.summary).toContain('Main');
-        expect(event.summary).toContain('Lloyd');
-        expect(event.start.date).toBe(date);
-        expect(event.end.date).toBe(date);
       });
     });
   });

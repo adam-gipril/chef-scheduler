@@ -10,8 +10,6 @@ declare namespace NodeJS {
     readonly CREDENTIALS: string;
     /** Current runtime environment */
     readonly NODE_ENV: string;
-    /** Port at which the express app will listen */
-    readonly PORT: string;
     /** Array of people used until a DB solution becomes necessary */
     PEOPLE: string;
   }

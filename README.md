@@ -1,26 +1,18 @@
-# Chef Cal Integration
+# Chef Scheduler
 
-> My friends and I cook dinner almost every night. One of us cooks a main dish, and someone else
-> cooks a side.
->
-> — <cite>Zana Jipsen</cite>
+My community of friends participates in a shared cooking schedule. Each week, we each cook on one
+of Sundday–Thursday. Because we all have dynamic schedules and various commitments we need to
+keep, the need for a scheduling system more sophisticated than fixed or rotating assignments has
+arisen.
 
-Zana very kindly developed a Python application called
-[Chef Scheduler](https://github.com/zjipsen/chef-scheduler) for scheduling each of us to cook on
-days we're available, and with an extra degree of intelligence in favoring chefs who haven't cooked
-in a while. The Python application sends out schedule updates once weekly via text message.
-
-Because text conversations can be easily buried and difficult to resurface, it would be convenient
-to also glance at the schedule in a Calendar view. Additionally, calendar integration means the
-built-in notification support already in place on most calendars can be leveraged for more easily-
-and personally-configured push notifications when it's your time to cook.
-
-This Node/Express application accepts POST requests from the scheduler, and converts the schedule
-into Google Calendar events.
+This application addresses the need to schedule a particular chef for a day on which to cook by
+taking into account that chef's availability each week. A task is scheduled to run each Friday,
+which first gathers each person's availability, then generates a schedule conforming to their
+availabilities, after which the schedule is posted to a shared Google Calendar and the group
+notified via SMS.
 
 ## Table of Contents
 
-1. [API](#api)
 1. [Developing](#developing)
 1. [Testing](#testing)
 1. [Documentation](#documentation)
@@ -28,47 +20,11 @@ into Google Calendar events.
 1. [Contributing](#contributing)
 1. [Links](#links)
 
-## API
-
-### Endpoint: `/schedule`
-
-#### Method: `POST`
-
-#### Parameters:
-
-| Field      | Type                                   | Required/Optional | Description                                        |
-| ---------- | -------------------------------------- | ----------------- | -------------------------------------------------- |
-| start-date | string (`YYYY-MM-DD` format preferred) | Required          | Date of the Sunday which starts the scheduled week |
-| schedule   | array of `ScheduleItem` objects        | Required          | Cooking event information                          |
-
-where a `ScheduleItem` object consists of
-
-| Field | Type   | Required/Optional | Description                                   | Allowed Values                    |
-| ----- | ------ | ----------------- | --------------------------------------------- | --------------------------------- |
-| type  | string | Required          | Type of meal the chef is cooking              | `Main`, `Side`                    |
-| chef  | string | Required          | Name of the person cooking                    |
-| day   | string | Required          | Day of the week on which cooking event occurs | `SUN`, `MON`, `TUE`, `WED`, `THU` |
-
-### Example
-
-```json
-{
-  "start-date": "2019-09-29",
-  "schedule": [
-    {
-      "type": "Main",
-      "chef": "Zana",
-      "day": "SUN"
-    }
-  ]
-}
-```
-
 ## Developing
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/en/download/) (12.4.x)
+- [Node.js](https://nodejs.org/en/download/) (lts/erbium)
 - [NVM](https://github.com/nvm-sh/nvm/blob/master/README.md)
 - [NPM](https://www.npmjs.com)
 
@@ -91,18 +47,17 @@ npm run build       # compiles the project
 npm run build:watch # compiles the project and watches for changes
 ```
 
-### Running the server
+### Running the application
 
-The server can be started using one of the following commands. Port 4003 is default, and can be
-overridden by preceding either command with `PORT=<desired port>`.
+The application can be started using one of the following commands.
 
 ```bash
-npm start           # runs the server
-npm run start:watch # runs the server using nodemon to watch for changes
+npm start           # runs the application (requires a build to have been run first)
+npm run start:watch # runs the application using nodemon to watch for changes
 ```
 
-Nodemon is configured to run Node registered with `ts-node`, so changes to TypeScript files
-will trigger a restart of the server.
+Nodemon is configured to run Node registered with `ts-node` on the `start:watch` script, so changes
+to TypeScript files will trigger a restart of the application.
 
 ### Debugging
 
@@ -119,15 +74,15 @@ A click on that icon will open a new instance of DevTools, attached to the Node 
 
 #### Nodemon launched with VSCode debugger
 
-A VSCode debugger configuration named "Launch via NPM" is available. This configuration, when run,
-executes `npm run start:watch` with the VSCode debugger attached to the process. Breakpoints and
-Logpoints can be set in the left gutter of the VSCode editor. Read
-[here](https://code.visualstudio.com/docs/editor/debugging#_debug-actions) for more information
-on the VSCode debugger.
+A VSCode debugger configuration named "Run node script" is available. This configuration, when run,
+first prompts for a file to run, and then runs that file through `ts-node`, with the VSCode
+debugger attached to the process. Breakpoints and Logpoints can be set in the left gutter of the
+VSCode editor. Read [here](https://code.visualstudio.com/docs/editor/debugging#_debug-actions) for
+more information on the VSCode debugger.
 
 #### VSCode debugger attached to running Nodemon process, or running, built Node process
 
-In addition to the "Launch via NPM" configuration, an "Attach by Process ID" configuration is
+In addition to the "Run node script" configuration, an "Attach by Process ID" configuration is
 available. This allows the VSCode debugger to attach to an already-running instance of the server,
 without the process needing to be in inspect mode. Simply run the server, run the debugger, and
 select to which Node process the debugger should attach.
@@ -162,12 +117,14 @@ Additional options can be passed to the test command, separated from npm options
 [here](https://jestjs.io/docs/en/cli#options) for more information.
 
 I also recommend the Jest extension for VSCode, which runs all tests in watch mode for you, with
-feedback on test status visualized directly in your IDE.
+feedback on test status visualized directly in your IDE. It also provides VSCode debugging support
+for test suites.
 
 ## Documentation
 
-Each method, class, and interface definition is documented using [JSDoc](https://devdocs.io/jsdoc/)
-syntax. Many IDEs are capable of generating hover-over documentation on-the-fly from JSDoc syntax.
+Each function, method, class, and interface definition is documented using
+[JSDoc](https://devdocs.io/jsdoc/) syntax. Many IDEs are capable of generating hover-over
+documentation on-the-fly from JSDoc syntax.
 
 To compile a navigable documentation resource and open it in your default browser, be sure to first
 [compile the project](#compiling) then run:
@@ -183,7 +140,8 @@ automatically update the deployment any time a change is committed to `master` o
 Google credentials are set with a config var through the Heroku dashboard or CLI.
 
 I'm currently the only individual with access to the deployment, so please get in touch with any
-questions or requests regarding the deploy.
+questions or requests regarding the deploy
+[via email](mailto:bikeshaman@icloud.com?subject=Chef%20Scheduler).
 
 ## Contributing
 
@@ -193,8 +151,7 @@ something fails on this service, so no big deal.
 
 ## Links
 
-- [Chef Scheduler](https://github.com/zjipsen/chef-scheduler)
-- [Chef Cal Integration](https://github.com/bikeshaman/chef-cal-integration)
+- [Chef Scheduler](https://github.com/bikeshaman/chef-scheduler)
 - [Google Calendar API](https://developers.google.com/calendar)
 - [Using OAuth 2.0 for Server to Server Applications](https://developers.google.com/identity/protocols/OAuth2ServiceAccount)
 - [Google Cloud Platform](https://console.cloud.google.com/)

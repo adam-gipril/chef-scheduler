@@ -1,10 +1,10 @@
 import moment from 'moment';
-import { Person, ScheduleItem } from '@/interfaces';
+import { Person } from '@/interfaces';
 import { GoogleCalendarService } from '@/services';
 import { capitalize } from '@/utils';
 import Chef from '../chef';
 import Event from '../event';
-import Schedule, { days } from './schedule';
+import Schedule from './schedule';
 
 export default class ChefSchedule extends Schedule {
   private static numDaysToAssign = 5; // Sunday–Thursday
@@ -12,6 +12,12 @@ export default class ChefSchedule extends Schedule {
     return JSON.parse(process.env.PEOPLE) as Person[];
   }
 
+  /**
+   * Standardized summary for a chef schedule event
+   *
+   * @param {string | Chef} chef individual who will cook the meal represented by the event
+   * @param { string } mealType (optional) type of meal the chef will cook ("Main" by default)
+   */
   static summary(chef: string | Chef, mealType = 'Main') {
     return `${capitalize(mealType)} — ${capitalize(chef instanceof Chef ? chef.name : chef)}`;
   }
@@ -68,18 +74,6 @@ export default class ChefSchedule extends Schedule {
         const summary = this.summary(chef);
         const start = moment().day(7); // Sunday of the coming week
         start.add(i, 'days');
-        return new Event({ summary, start });
-      }),
-    );
-  }
-
-  /** Construct a ChefSchedule from data conforming to the chef-cal-integration external API */
-  static fromScheduleItems(scheduleItems: ScheduleItem[], startDateString: string) {
-    return new ChefSchedule(
-      scheduleItems.map(({ chef, day, type }) => {
-        const summary = this.summary(chef, type);
-        const start = moment(startDateString, 'YYYY-MM-DD');
-        start.add(days[day.toUpperCase()], 'days');
         return new Event({ summary, start });
       }),
     );
